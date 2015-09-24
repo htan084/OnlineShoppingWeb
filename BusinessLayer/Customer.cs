@@ -10,6 +10,7 @@ namespace OnlineShoppingWeb
     [Table("Customers")]
     public class Customer
     {
+
         public int CustomerID { get; set; }
         [Required]
         public string FirstName { get; set; }
