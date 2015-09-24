@@ -1,0 +1,109 @@
+﻿@model OnlineShoppingWeb.ViewModels.CustomerViewModel
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Form</title>
+    <link href="~/Bootstrip/bootstrip335css.css" rel="stylesheet" />
+    <script src="~/Bootstrip/jquery-1.11.3.js"></script>
+    <script src="~/Bootstrip/bootstrip335js.js"></script>
+    <script src="~/Scripts/Validation.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <style>
+        .carousel-inner > .item > img,
+        .carousel-inner > .item > a > img {
+            width: 70%;
+            margin: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true)
+
+            <fieldset>
+                <legend>Edit your customer's details</legend>
+
+                <div class="editor-field">
+                    @Html.HiddenFor(model => model.CustomerID)
+                </div>
+
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.FirstName)
+                </div>
+                <div class="editor-field">
+                    @Html.TextBoxFor(model => model.FirstName, new { @class = "form-control", id = "firstName", placeholder = "Enter your first name", name = "FirstName", style = "background-color:lightblue" })
+                    @Html.ValidationMessageFor(model => model.FirstName)
+                </div>
+
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.LastName)
+                </div>
+                <div class="editor-field">
+                    @Html.TextBoxFor(model => model.LastName, new { @class = "form-control", id = "lastName", placeholder = "Enter your last name", name = "LastName", style = "background-color:lightblue" })
+                    @Html.ValidationMessageFor(model => model.LastName)
+                </div>
+
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.Age)
+                </div>
+                <div class="editor-field">
+                    @Html.TextBoxFor(model => model.Age, new { @class = "form-control", id = "age", placeholder = "Enter your age", name = "Age", style = "background-color:lightblue" })
+                    @Html.ValidationMessageFor(model => model.Age)
+                </div>
+
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.Mobile)
+                </div>
+                <div class="editor-field">
+                    @Html.TextBoxFor(model => model.Mobile, new { @class = "form-control", id = "mobile", placeholder = "Enter your mobile number", name = "MobileNumber", style = "background-color:lightblue" })
+                    @Html.ValidationMessageFor(model => model.Mobile)
+                </div>
+
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.Address)
+                </div>
+                <div class="editor-field">
+                    @Html.TextBoxFor(model => model.Address, new { @class = "form-control", id = "address", placeholder = "Enter your address", name = "Address", style = "background-color:lightblue" })
+                    @Html.ValidationMessageFor(model => model.Address)
+                </div>
+
+                <div class="editor-field">
+                    @Html.HiddenFor(model => model.UserName)
+                </div>
+                <div class="editor-field">
+                    @Html.HiddenFor(model => model.Password)
+                </div>
+
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.Email)
+                </div>
+                <div class="editor-field">
+                    @Html.TextBoxFor(model => model.Email, new { @class = "form-control", id = "email", placeholder = "Enter your email", name = "Email", style = "background-color:lightblue" })
+                    @Html.ValidationMessageFor(model => model.Email)
+                </div>
+
+                <p>
+                    <input type="submit" value="Save" />
+                </p>
+            </fieldset>
+        }
+
+        <div>
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    </div>
+</body>
+</html>

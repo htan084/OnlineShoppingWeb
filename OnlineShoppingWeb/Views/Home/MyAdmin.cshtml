@@ -1,0 +1,70 @@
+﻿@{
+    Layout = null;
+}
+@using OnlineShoppingWeb.ViewModels
+@model CustomerViewModelList
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Adminstration</title>
+    <link href="~/Bootstrip/bootstrip335css.css" rel="stylesheet" />
+    <script src="~/Bootstrip/jquery-1.11.3.js"></script>
+    <script src="~/Bootstrip/bootstrip335js.js"></script>
+    <style>
+        .carousel-inner > .item > img,
+        .carousel-inner > .item > a > img {
+            width: 70%;
+            margin: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="~/Product/ProductManage" class="btn btn-info" role="button">My Products</a>
+        <h2>My Customers</h2>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>CustomerID</th>
+                    <th>LastName</th>
+                    <th>FirstName</th>
+                    <th>UserName</th>
+                    <th>Password</th>
+                    <th>Age</th>
+                    <th>Mobile</th>
+                    <th>Email</th>
+                    <th>Address</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.CustomerList)
+                {
+                    using (Html.BeginForm("Delete", "Home", new { customerID = item.CustomerID }))
+                    {
+                        <tr class="success">
+                            <td>@item.CustomerID</td>
+                            <td>@item.LastName</td>
+                            <td>@item.FirstName</td>
+                            <td>@item.UserName</td>
+                            <td>@item.Password</td>
+                            <td>@item.Age</td>
+                            <td>@item.Mobile</td>
+                            <td>@item.Email</td>
+                            <td>@item.Address</td>
+                            <td>@Html.ActionLink("Edit", "Edit", "Home", new { customerID = item.CustomerID }, null)
+                                <input type="submit" value="Delete" onclick="return confirm('Are you sure you want to delete customer with id = @item.CustomerID ?')" style="background-color: red">
+                            </td>
+                        </tr>
+                       
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

@@ -1,0 +1,93 @@
+﻿@model OnlineShoppingWeb.ViewModels.CustomerViewModel
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Form</title>
+    <link href="~/Bootstrip/bootstrip335css.css" rel="stylesheet" />
+    <script src="~/Bootstrip/jquery-1.11.3.js"></script>
+    <script src="~/Bootstrip/bootstrip335js.js"></script>
+    <script src="~/Scripts/Validation.js"></script>
+    <style>
+        .carousel-inner > .item > img,
+        .carousel-inner > .item > a > img {
+            width: 70%;
+            margin: auto;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>Please fill your Information</h2>
+        <form role="form" action="~/Home/SaveCustomer" method="post" @*onsubmit=" return IsValid()"*@>
+            
+            @*@Html.ValidationSummary(true)*@
+
+
+            <div class="form-group">
+                <label for="lastName">Last Name:</label>
+                <input type="text" class="form-control" id="lastName" placeholder="Enter your last name" name="LastName" style="background-color:lightblue" value=@Model.LastName>
+            </div>
+            <div class="form-group">
+                @*@Html.LabelFor(o => o.LastName)
+                    @Html.EditorFor(o => o.LastName, new { @class = "form-control", style = "background-color:lightblue", placeholder = "Enter your first name" })
+                    @Html.ValidationMessageFor(o => o.LastName)*@
+            </div>
+            <div class="form-group">
+                <label for="firstName">First Name:</label>
+                <input type="text" class="form-control" id="firstName" placeholder="Enter your first name" name="FirstName" style="background-color:lightblue" value=@Model.FirstName>
+                @Html.ValidationMessageFor(o => o.FirstName)
+            </div>
+            <div class="form-group">
+                <label for="age">Age:</label>
+                <input type="text" class="form-control" id="age" placeholder="Enter your age" name="Age" style="background-color:lightblue" value=@Model.Age>
+
+            </div>
+            <div class="form-group">
+                <label for="userName">your UserName:</label>
+                <input type="text" class="form-control" id="userName" placeholder="Enter UserName" name="UserName" style="background-color:lightblue" value=@Model.UserName>
+                @Html.ValidationMessage("UserName")
+            </div>
+            <div class="form-group">
+                <label for="pwd">Password:</label>
+                <input type="password" class="form-control" id="pwd" placeholder="Enter password" name="UserPass" style="background-color:lightblue" value=@Model.Password>
+            </div>
+            <div class="form-group">
+                <label for="mobile">Mobile:</label>
+                <input type="text" class="form-control" id="mobile" placeholder="Enter your mobile number" name="Mobile" style="background-color:lightblue" value=@Model.Mobile>
+            </div>
+            <div class="form-group">
+                <label for="Email">Email:</label>
+                <input type="text" class="form-control" id="email" placeholder="Enter email" name="Email" style="background-color:lightblue" value=@Model.Email>
+            </div>
+            <div class="form-group">
+                <label for="address">Address:</label>
+                <input type="text" class="form-control" id="address" placeholder="Enter your address" name="Address" style="background-color:lightblue" value=@Model.Address>
+            </div>
+            <div class="btn-group">
+                <button type="submit" class="btn btn-info" name="btnSubmit" value="Save">Save</button>
+                <button type="button" class="btn btn-info" name="clear" value="clear" id="clearBtn" onclick="ResetForm()">clear</button>
+                <button type="submit" class="btn btn-info" name="btnSubmit" value="Cancel">Cancel</button>
+            </div>
+            <input type="hidden" name="CustomerID" value="@Model.CustomerID" />
+        </form>
+    </div>
+    <script>
+        function ResetForm() {
+            $("#lastName").val("");
+            $("#firstName").val("");
+            $("#age").val("");
+            $("#userName").val("");
+            $("#pwd").val("");
+            $("#mobile").val("");
+            $("#email").val("");
+            $("#address").val("");
+        };
+    </script>
+</body>
+</html>
+@*@Html.AntiForgeryToken()*@

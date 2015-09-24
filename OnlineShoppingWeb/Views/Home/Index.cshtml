@@ -1,0 +1,41 @@
+﻿<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>HomePage</title>
+    <link href="~/Bootstrip/bootstrip335css.css" rel="stylesheet" />
+    <script src="~/Bootstrip/jquery-1.11.3.js"></script>
+    <script src="~/Bootstrip/bootstrip335js.js"></script>
+    <style>
+        .carousel-inner > .item > img,
+        .carousel-inner > .item > a > img {
+            width: 70%;
+            margin: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h3>Zhen liu's online shop home page</h3>
+        <ul class="nav nav-pills nav-justified">
+            <li class="active"><a href="#">Home</a></li>
+            <li><a href="~/Product/OnlineShopping">Shop online</a></li>
+            <li><a href="#">Search</a></li>
+            <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                    login
+                    <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a href="~/home/AddNew">Register</a></li>
+                    <li><a href="#">Customer</a></li>
+                    <li><a href="~/Home/MyAdmin">Staff </a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+    </body>
+</html>

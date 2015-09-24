@@ -1,0 +1,82 @@
+﻿@model OnlineShoppingWeb.ViewModels.ProductViewModel
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Form</title>
+    <link href="~/Bootstrip/bootstrip335css.css" rel="stylesheet" />
+    <script src="~/Bootstrip/jquery-1.11.3.js"></script>
+    <script src="~/Bootstrip/bootstrip335js.js"></script>
+    <script src="~/Scripts/Validation.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <style>
+        .carousel-inner > .item > img,
+        .carousel-inner > .item > a > img {
+            width: 70%;
+            margin: auto;
+        }
+    </style>
+</head>
+<body>
+
+
+    <div class="container">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true)
+
+            <fieldset>
+                <legend>ProductViewModel</legend>
+
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.Name)
+                </div>
+                <div class="editor-field">
+                    @Html.TextBoxFor(model => model.Name, new { @class="form-control", id="Name", placeholder="Enter product name", name="Name",style="background-color:lightyellow"})
+                    @Html.ValidationMessageFor(model => model.Name)
+                </div>
+
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.Price)
+                </div>
+                <div class="editor-field">
+                    @Html.TextBoxFor(model => model.Price, new { @class = "form-control", id = "Price", placeholder = "Enter product name", name = "Price", style = "background-color:lightyellow" })
+                    @Html.ValidationMessageFor(model => model.Price)
+                </div>
+
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.Url)
+                </div>
+                <div class="editor-field">
+                    @Html.TextBoxFor(model => model.Url,new { @class = "form-control", id = "Price", placeholder = "Enter picture name", name = "Price", style = "background-color:lightyellow" }))
+                    @Html.ValidationMessageFor(model => model.Url)
+                </div>
+
+                <p>
+                    <input type="submit" value="Create" />
+                </p>
+            </fieldset>
+        }
+        <div>
+
+            <form action="/Product/Upload" method="post" enctype="multipart/form-data">
+                Select File : <input type="file" name="FileToUpload" value="" />
+                <input type="submit" name="name" value="Upload" />
+            </form>
+        </div>
+        <div>
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    </div>
+</body>
+</html>
