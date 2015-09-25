@@ -26,14 +26,14 @@ namespace OnlineShoppingWeb.Controllers
         {
             var products = service.GetProducts();
 
-            return View(ConvertToViewModel(products));
+            return View(ConvertToViewModelList(products));
         }
 
 
         public ActionResult ProductManage()
         {
             var products = service.GetProducts();
-            return View(ConvertToViewModel(products).ProductList);
+            return View(ConvertToViewModelList(products).ProductList);
         }
         [HttpGet]
         public ActionResult Create()
@@ -65,11 +65,7 @@ namespace OnlineShoppingWeb.Controllers
         public ActionResult Edit_Get(int id)
         {
             var product = service.GetProducts().Single(prod => prod.Id == id);
-            var productViewModel = new ProductViewModel();
-            productViewModel.Id = product.Id;
-            productViewModel.Name = product.Name;
-            productViewModel.Price = product.Price.ToString();
-            productViewModel.Url = product.Url;
+            var productViewModel = ConvertToViewModelFromProduct(product);
             return View(productViewModel);
         }
 
@@ -78,10 +74,12 @@ namespace OnlineShoppingWeb.Controllers
         public ActionResult Edit_Post(int id)
         {
             var product = service.GetProducts().Single(prod => prod.Id == id);
-            TryUpdateModel(product);
+            var productViewModel = ConvertToViewModelFromProduct(product);
+            TryUpdateModel(productViewModel);
             if (ModelState.IsValid)
             {
-                service.SaveProduct(product);
+                var modifiedProduct = ConvertToProductFromViewModel(productViewModel);
+                service.SaveProduct(modifiedProduct);
                 return RedirectToAction("ProductManage");
             }
             return View();
@@ -92,7 +90,6 @@ namespace OnlineShoppingWeb.Controllers
         public ActionResult Delete(int id)
         {
             var product = service.GetProducts().Single(prod => prod.Id == id);
-            TryUpdateModel(product);
             if (ModelState.IsValid)
             {
                 service.DeleteProduct(product);
@@ -101,7 +98,7 @@ namespace OnlineShoppingWeb.Controllers
             return View();
         }
 
-        public ProductViewModelList ConvertToViewModel(List<Product> products)
+        public ProductViewModelList ConvertToViewModelList(List<Product> products)
         {
             ProductViewModelList list = new ProductViewModelList();
             if (products != null)
@@ -118,6 +115,27 @@ namespace OnlineShoppingWeb.Controllers
                 list.ProductList.Add(productViewModel);
             }
             return list;
+        }
+
+        public ProductViewModel ConvertToViewModelFromProduct(Product product)
+        {
+            var productViewModel = new ProductViewModel();
+            productViewModel.Id = product.Id;
+            productViewModel.Name = product.Name;
+            productViewModel.Price = product.Price.ToString();
+            productViewModel.Url = product.Url;
+            return productViewModel;
+        }
+
+        public Product ConvertToProductFromViewModel(ProductViewModel productViewModel)
+        {
+            var product = new Product { 
+                Id = productViewModel.Id,
+                Name = productViewModel.Name,
+                Price = Convert.ToInt32(productViewModel.Price),
+                Url = productViewModel.Url
+            };
+            return product;
         }
     }
 }

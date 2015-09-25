@@ -25,7 +25,6 @@ namespace OnlineShoppingWeb.Controllers
         [HttpGet]
         public ActionResult AddNew()
         {
-
             return View("Form", new CustomerViewModel());
         }
 
@@ -66,7 +65,7 @@ namespace OnlineShoppingWeb.Controllers
         //}
 
         [HttpPost]
-        public ActionResult SaveCustomer(Customer customer, string btnSubmit)
+        public ActionResult SaveCustomer(CustomerViewModel customerViewModel, string btnSubmit)
         {
 
 
@@ -78,25 +77,24 @@ namespace OnlineShoppingWeb.Controllers
                     //{
                     //    ModelState.AddModelError("UserName", "This user name has already been used");
                     //}
+
+                    if ((string.IsNullOrEmpty(customerViewModel.UserName)) || customerViewModel.UserName.Length < 5 || customerViewModel.UserName.Length>9)
+                    {
+                        ModelState.AddModelError("UserName", "UserName needs to between 5 to 9 characters");
+                    }
+                    if ((string.IsNullOrEmpty(customerViewModel.UserPass)) || customerViewModel.UserPass.Length < 5 || customerViewModel.UserPass.Length > 9)
+                    {
+                        ModelState.AddModelError("UserPass", "Password needs to between 5 to 9 characters");
+                    }
                     if (ModelState.IsValid)
                     {
-
+                        var customer = ConvertToCustomerFromViewModel(customerViewModel);
                         service.CreateNewCustomer(customer);
-                        ViewBag.Message = "Customer " + customer.FirstName + "has been saved";
+                        ViewBag.Message = "Customer " + customerViewModel.FirstName + "has been saved";
 
                     }
                     else
                     {
-                        var customerViewModel = new CustomerViewModel();
-                        customerViewModel.Address = customer.Address;
-                        customerViewModel.Age = customer.Age.ToString();
-                        customerViewModel.CustomerID = customer.CustomerID;
-                        customerViewModel.FirstName = customer.FirstName;
-                        customerViewModel.LastName = customer.LastName;
-                        customerViewModel.Mobile = customer.Mobile;
-                        customerViewModel.Password = customer.UserPass;
-                        customerViewModel.UserName = customer.UserName;
-                        customerViewModel.Email = customer.Email;
                         return View("Form", customerViewModel);
                     }
                     break;
@@ -126,16 +124,7 @@ namespace OnlineShoppingWeb.Controllers
             var customerList = service.GetCustomers();
             foreach (var customer in customerList)
             {
-                var customerViewModel = new CustomerViewModel();
-                customerViewModel.Address = customer.Address;
-                customerViewModel.Age = customer.Age.ToString();
-                customerViewModel.CustomerID = customer.CustomerID;
-                customerViewModel.FirstName = customer.FirstName;
-                customerViewModel.LastName = customer.LastName;
-                customerViewModel.Mobile = customer.Mobile;
-                customerViewModel.Password = customer.UserPass;
-                customerViewModel.UserName = customer.UserName;
-                customerViewModel.Email = customer.Email;
+                var customerViewModel = ConvertToViewModelFromCustomer(customer);
                 customerListModel.CustomerList.Add(customerViewModel);
             }
             return View(customerListModel);
@@ -148,16 +137,7 @@ namespace OnlineShoppingWeb.Controllers
             var customer = service.GetCustomerById(customerID);
             if (customer != null)
             {
-                var customerViewModel = new CustomerViewModel();
-                customerViewModel.Address = customer.Address;
-                customerViewModel.Age = customer.Age.ToString();
-                customerViewModel.CustomerID = customer.CustomerID;
-                customerViewModel.FirstName = customer.FirstName;
-                customerViewModel.LastName = customer.LastName;
-                customerViewModel.Mobile = customer.Mobile;
-                customerViewModel.Password = customer.UserPass;
-                customerViewModel.UserName = customer.UserName;
-                customerViewModel.Email = customer.Email;
+                var customerViewModel = ConvertToViewModelFromCustomer(customer);
                 return View(customerViewModel);
             }
             else
@@ -171,16 +151,50 @@ namespace OnlineShoppingWeb.Controllers
         public ActionResult Edit_Post(int customerID)
         {
             var customer = service.GetCustomerById(customerID);
-            TryUpdateModel(customer,new string[] {"FirstName","LastName","Age","Email","Address","Mobile"});
+            var customerViewModel = ConvertToViewModelFromCustomer(customer);
+            TryUpdateModel(customerViewModel, new string[] { "FirstName", "LastName", "Age", "Email", "Address", "Mobile" });
             if (ModelState.IsValid)
             {
-                service.UpdateCustomer(customer);
+                var modiefiedCustomer = ConvertToCustomerFromViewModel(customerViewModel);
+                service.UpdateCustomer(modiefiedCustomer);
                 return RedirectToAction("MyAdmin");
             }
             else
             {
+                
                 return View();
             }
+        }
+
+        public CustomerViewModel ConvertToViewModelFromCustomer(Customer customer)
+        {
+            var customerViewModel = new CustomerViewModel();
+            customerViewModel.Address = customer.Address;
+            customerViewModel.Age = customer.Age.ToString();
+            customerViewModel.CustomerID = customer.CustomerID;
+            customerViewModel.FirstName = customer.FirstName;
+            customerViewModel.LastName = customer.LastName;
+            customerViewModel.Mobile = customer.Mobile;
+            customerViewModel.UserPass = customer.UserPass;
+            customerViewModel.UserName = customer.UserName;
+            customerViewModel.Email = customer.Email;
+            return customerViewModel;
+        }
+
+        public Customer ConvertToCustomerFromViewModel(CustomerViewModel customerViewModel)
+        {
+            Customer customer = new Customer { 
+                Address = customerViewModel.Address,
+                Age = Convert.ToInt32(customerViewModel.Age),
+                CustomerID = customerViewModel.CustomerID,
+                Email = customerViewModel.Email,
+                FirstName = customerViewModel.FirstName,
+                LastName = customerViewModel.LastName,
+                Mobile = customerViewModel.Mobile,
+                UserName = customerViewModel.UserName,
+                UserPass = customerViewModel.UserPass
+            };
+            return customer;
         }
     }
 }

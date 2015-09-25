@@ -49,15 +49,19 @@
             @Html.LabelFor(model => model.Url)
         </div>
         <div class="editor-field">
-            @Html.TextBoxFor(model => model.Url, new { @class = "form-control", id = "Price", placeholder = "Enter picture name", name = "Price", style = "background-color:lightyellow" })
-            @Html.ValidationMessageFor(model => model.Url)
+            @Html.HiddenFor(model => model.Url, new { @class = "form-control", id = "url", placeholder = "Enter picture name", name = "Price", style = "background-color:lightyellow" })
         </div>
         <p>
             <input type="submit" value="Save" />
         </p>
     </fieldset>
         }
-
+        <div>
+            <form action="/Product/Upload" method="post" enctype="multipart/form-data">
+                Select File : <input type="file" name="FileToUpload" value="" />
+                <input type="submit" name="name" value="Upload" />
+            </form>
+        </div>
         <div>
             @Html.ActionLink("Back to List", "Index")
         </div>
