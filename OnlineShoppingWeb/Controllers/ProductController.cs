@@ -43,12 +43,16 @@ namespace OnlineShoppingWeb.Controllers
 
         public ActionResult Upload(FileUploadViewModel fileUpload)
         {
-
-            fileUpload.FileToUpload.SaveAs(@"D:\MyWifeWeb\OnlineShoppingWeb\OnlineShoppingWeb\Image\" + fileUpload.FileToUpload.FileName);
-
+          
+            int productId = Convert.ToInt32(Request["ProductId"]);
+            string url = productId + ".jpg";
+            fileUpload.FileToUpload.SaveAs(@"D:\MyWifeWeb\OnlineShoppingWeb\OnlineShoppingWeb\Image\" + url);
+            var product = service.GetProducts().Single(x => x.Id == productId);
+            product.Url = url;
+            service.SaveProduct(product);
             ViewBag.Message = "The file is saved";
 
-            return View("Create");
+            return RedirectToAction("ProductManage");
 
         }
 

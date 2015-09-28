@@ -17,8 +17,6 @@ namespace OnlineShoppingWeb.ViewModels
         [RegularExpression("^[a-zA-Z]*$", ErrorMessage = "string only")]
         public string LastName { get; set; }
         [Required]
-        public string Age { get; set; }
-        [Required]
         public string Mobile { get; set; }
         [Required]
         public string Address { get; set; }
@@ -26,5 +24,7 @@ namespace OnlineShoppingWeb.ViewModels
         public string UserPass { get; set; }
         [Required]
         public string Email { get; set; }
+        [Required]
+        public DateTime? DateOfBirth { get; set; }
     }
 }

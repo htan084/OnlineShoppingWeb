@@ -204,7 +204,6 @@
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />
-    <Content Include="Image\AA.jpg" />
     <Content Include="Image\BB.jpg" />
     <Content Include="Image\CC.jpg" />
     <Content Include="Image\DD.jpg" />
@@ -212,6 +211,7 @@
     <Content Include="Image\FF.jpg" />
     <Content Include="Image\GG.jpg" />
     <Content Include="Image\HH.jpg" />
+    <Content Include="Scripts\DatePick.js" />
     <Content Include="Scripts\jquery-1.8.2.js" />
     <Content Include="Scripts\jquery-1.8.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
@@ -245,13 +245,13 @@
     <Content Include="Views\Product\OnlineShopping.cshtml" />
     <Content Include="Views\Home\Form.cshtml" />
     <Content Include="Views\Home\MyAdmin.cshtml" />
-    <Content Include="Views\Home\AddNew.cshtml" />
     <Content Include="Views\Product\ProductManage.cshtml" />
     <Content Include="Views\Product\Create.cshtml" />
     <Content Include="Views\Product\Edit.cshtml" />
     <Content Include="Views\Authentication\Login.cshtml" />
     <Content Include="Views\Authentication\LogOut.cshtml" />
     <Content Include="Views\Home\Edit.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\DateTime.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

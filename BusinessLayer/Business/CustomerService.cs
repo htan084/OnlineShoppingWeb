@@ -18,48 +18,22 @@ namespace OnlineShoppingWeb.Business
             {
                 conn.ConnectionString = System.Configuration.ConfigurationManager.ConnectionStrings["CustomerContext"].ConnectionString;
                 conn.Open();
-                SqlCommand sql = new SqlCommand("insert into customers (UserName,UserPass,Age,Mobile,Email,LastName,FirstName,Address) values(@UserName,@UserPass,@Age,@Mobile,@Email,@LastName,@FirstName,@Address)", conn);
+                SqlCommand sql = new SqlCommand("insert into customers (UserName,UserPass,Mobile,Email,LastName,FirstName,Address,DateOfBirth) values(@UserName,@UserPass,@Mobile,@Email,@LastName,@FirstName,@Address,@DateOfBirth)", conn);
                 sql.Parameters.Add(new SqlParameter("UserName", customer.UserName));
                 sql.Parameters.Add(new SqlParameter("UserPass", customer.UserPass));
-                sql.Parameters.Add(new SqlParameter("Age", customer.Age));
                 sql.Parameters.Add(new SqlParameter("Mobile", customer.Mobile));
                 sql.Parameters.Add(new SqlParameter("Email", customer.Email));
                 sql.Parameters.Add(new SqlParameter("LastName", customer.LastName));
                 sql.Parameters.Add(new SqlParameter("FirstName", customer.FirstName));
                 sql.Parameters.Add(new SqlParameter("Address", customer.Address));
+                sql.Parameters.Add(new SqlParameter("DateOfBirth", customer.DateOfBirth));
+
                 sql.ExecuteNonQuery();
             }
         }
 
         public List<Customer> GetCustomers()
         {
-            //List<Customer> customerList = new List<Customer>();
-            //using (SqlConnection conn = new SqlConnection())
-            //{
-            //    conn.ConnectionString = System.Configuration.ConfigurationManager.ConnectionStrings["Home"].ConnectionString;
-            //    conn.Open();
-            //    SqlCommand sql = new SqlCommand("select * from customers", conn);
-            //    using (SqlDataReader reader = sql.ExecuteReader())
-            //    {
-            //        while (reader.Read())
-            //        {
-            //            var customer = new Customer
-            //            {
-            //                CustomerID = (int)reader["CustomerID"],
-            //                LastName = reader["LastName"].ToString(),
-            //                FirstName = reader["FirstName"].ToString(),
-            //                UserName = reader["UserName"].ToString(),
-            //                Password = reader["UserPass"].ToString(),
-            //                Age = (int)reader["Age"],
-            //                MobileNumber = reader["Mobile"].ToString(),
-            //                Email = reader["Email"].ToString(),
-            //                Address = reader["Address"].ToString()
-            //            };
-            //            customerList.Add(customer);
-            //        }
-            //    }
-
-            //}
             
             CustomerContext customers = new CustomerContext();
             var customerList = customers.Customers.ToList();
@@ -68,33 +42,6 @@ namespace OnlineShoppingWeb.Business
 
         public Customer GetCustomerById(int customerID)
         {
-            //Customer customer = null;
-            //using (SqlConnection conn = new SqlConnection())
-            //{
-            //    conn.ConnectionString = System.Configuration.ConfigurationManager.ConnectionStrings["Home"].ConnectionString;
-            //    conn.Open();
-            //    SqlCommand sql = new SqlCommand("select * from customers where customerID = @ID",conn);
-            //    sql.Parameters.Add(new SqlParameter("ID",customerID));
-            //    using (SqlDataReader reader = sql.ExecuteReader())
-            //    {
-            //        if (reader.HasRows)
-            //        {
-            //            reader.Read();
-            //            customer = new Customer
-            //            {
-            //                CustomerID = customerID,
-            //                LastName = reader["LastName"].ToString(),
-            //                FirstName = reader["FirstName"].ToString(),
-            //                UserName = reader["UserName"].ToString(),
-            //                UserPass = reader["UserPass"].ToString(),
-            //                Age = (int)reader["Age"],
-            //                Mobile = reader["Mobile"].ToString(),
-            //                Email = reader["Email"].ToString(),
-            //                Address = reader["Address"].ToString()
-            //            };
-            //        }
-            //    }
-            //}
             CustomerContext customers = new CustomerContext();
             Customer customer = customers.Customers.Single(cus => cus.CustomerID == customerID);
             return customer;
@@ -106,16 +53,17 @@ namespace OnlineShoppingWeb.Business
             {
                 conn.ConnectionString = System.Configuration.ConfigurationManager.ConnectionStrings["CustomerContext"].ConnectionString;
                 conn.Open();
-                SqlCommand sql = new SqlCommand("Update customers set UserPass=@UserPass,Age=@Age,Mobile=@Mobile,Email=@Email,LastName=@LastName,FirstName=@FirstName,Address=@Address where customerID = @CustomerID", conn);
+                SqlCommand sql = new SqlCommand("Update customers set UserPass=@UserPass,Mobile=@Mobile,Email=@Email,LastName=@LastName,FirstName=@FirstName,Address=@Address,DateOfBirth = @DateOfBirth where customerID = @CustomerID", conn);
                 sql.Parameters.Add(new SqlParameter("UserName", customer.UserName));
                 sql.Parameters.Add(new SqlParameter("CustomerID", customer.CustomerID));
                 sql.Parameters.Add(new SqlParameter("UserPass", customer.UserPass));
-                sql.Parameters.Add(new SqlParameter("Age", customer.Age));
                 sql.Parameters.Add(new SqlParameter("Mobile", customer.Mobile));
                 sql.Parameters.Add(new SqlParameter("Email", customer.Email));
                 sql.Parameters.Add(new SqlParameter("LastName", customer.LastName));
                 sql.Parameters.Add(new SqlParameter("FirstName", customer.FirstName));
                 sql.Parameters.Add(new SqlParameter("Address", customer.Address));
+                sql.Parameters.Add(new SqlParameter("DateOfBirth", customer.DateOfBirth));
+
                 sql.ExecuteNonQuery();
             }
         }

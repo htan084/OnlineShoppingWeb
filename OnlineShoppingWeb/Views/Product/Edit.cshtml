@@ -26,42 +26,45 @@
             @Html.AntiForgeryToken()
             @Html.ValidationSummary(true)
 
-    <fieldset>
-        <legend>ProductViewModel</legend>
+            <fieldset>
+                <legend>ProductViewModel</legend>
 
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Name)
-        </div>
-        <div class="editor-field">
-            @Html.TextBoxFor(model => model.Name, new { @class = "form-control", id = "Name", placeholder = "Enter product name", name = "Name", style = "background-color:lightyellow" })
-            @Html.ValidationMessageFor(model => model.Name)
-        </div>
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.Name)
+                </div>
+                <div class="editor-field">
+                    @Html.TextBoxFor(model => model.Name, new { @class = "form-control", id = "Name", placeholder = "Enter product name", name = "Name", style = "background-color:lightyellow" })
+                    @Html.ValidationMessageFor(model => model.Name)
+                </div>
 
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Price)
-        </div>
-        <div class="editor-field">
-            @Html.TextBoxFor(model => model.Price, new { @class = "form-control", id = "Price", placeholder = "Enter product name", name = "Price", style = "background-color:lightyellow" })
-            @Html.ValidationMessageFor(model => model.Price)
-        </div>
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.Price)
+                </div>
+                <div class="editor-field">
+                    @Html.TextBoxFor(model => model.Price, new { @class = "form-control", id = "Price", placeholder = "Enter product name", name = "Price", style = "background-color:lightyellow" })
+                    @Html.ValidationMessageFor(model => model.Price)
+                </div>
 
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Url)
-        </div>
-        <div class="editor-field">
-            @Html.HiddenFor(model => model.Url, new { @class = "form-control", id = "url", placeholder = "Enter picture name", name = "Price", style = "background-color:lightyellow" })
-        </div>
-        <p>
-            <input type="submit" value="Save" />
-        </p>
-    </fieldset>
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.Url)
+                </div>
+                <div class="editor-field">
+                    @Html.HiddenFor(model => model.Url, new { @class = "form-control", id = "url", placeholder = "Enter picture name", name = "Price", style = "background-color:lightyellow" })
+                </div>
+                <p>
+                    <input type="submit" value="Save" />
+                </p>
+            </fieldset>
         }
         <div>
             <form action="/Product/Upload" method="post" enctype="multipart/form-data">
                 Select File : <input type="file" name="FileToUpload" value="" />
+                <input type="hidden"  name ="productId" value="@Model.Id">
                 <input type="submit" name="name" value="Upload" />
+
             </form>
         </div>
+ 
         <div>
             @Html.ActionLink("Back to List", "Index")
         </div>

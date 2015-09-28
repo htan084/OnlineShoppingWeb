@@ -28,42 +28,6 @@ namespace OnlineShoppingWeb.Controllers
             return View("Form", new CustomerViewModel());
         }
 
-        //[HttpPost]
-        //public ActionResult SaveCustomer(Customer customer, string btnSubmit)
-        //{
-
-
-        //    switch (btnSubmit)
-        //    {
-        //        case "Save":
-        //            if (ModelState.IsValid)
-        //            {
-        //                if (customer.CustomerID == 0)
-        //                {
-        //                    service.CreateNewCustomer(customer);
-        //                    ViewBag.Message = "Customer " + customer.FirstName + "has been saved";
-        //                }
-        //                else
-        //                {
-        //                    service.UpdateCustomer(customer);
-        //                    ViewBag.Message = "Customer " + customer.FirstName + "has been updated";
-        //                }
-        //            }
-        //            else
-        //            {
-        //                return View("Form");
-        //            }
-        //            break;
-
-        //        case "Cancel":
-        //            return RedirectToAction("Index");
-
-        //    }
-
-
-        //    return RedirectToAction("Index");
-        //}
-
         [HttpPost]
         public ActionResult SaveCustomer(CustomerViewModel customerViewModel, string btnSubmit)
         {
@@ -152,7 +116,7 @@ namespace OnlineShoppingWeb.Controllers
         {
             var customer = service.GetCustomerById(customerID);
             var customerViewModel = ConvertToViewModelFromCustomer(customer);
-            TryUpdateModel(customerViewModel, new string[] { "FirstName", "LastName", "Age", "Email", "Address", "Mobile" });
+            TryUpdateModel(customerViewModel, new string[] { "FirstName", "LastName","Email", "Address", "Mobile" ,"DateOfBirth"});
             if (ModelState.IsValid)
             {
                 var modiefiedCustomer = ConvertToCustomerFromViewModel(customerViewModel);
@@ -170,7 +134,6 @@ namespace OnlineShoppingWeb.Controllers
         {
             var customerViewModel = new CustomerViewModel();
             customerViewModel.Address = customer.Address;
-            customerViewModel.Age = customer.Age.ToString();
             customerViewModel.CustomerID = customer.CustomerID;
             customerViewModel.FirstName = customer.FirstName;
             customerViewModel.LastName = customer.LastName;
@@ -178,6 +141,7 @@ namespace OnlineShoppingWeb.Controllers
             customerViewModel.UserPass = customer.UserPass;
             customerViewModel.UserName = customer.UserName;
             customerViewModel.Email = customer.Email;
+            customerViewModel.DateOfBirth = customer.DateOfBirth;
             return customerViewModel;
         }
 
@@ -185,14 +149,14 @@ namespace OnlineShoppingWeb.Controllers
         {
             Customer customer = new Customer { 
                 Address = customerViewModel.Address,
-                Age = Convert.ToInt32(customerViewModel.Age),
                 CustomerID = customerViewModel.CustomerID,
                 Email = customerViewModel.Email,
                 FirstName = customerViewModel.FirstName,
                 LastName = customerViewModel.LastName,
                 Mobile = customerViewModel.Mobile,
                 UserName = customerViewModel.UserName,
-                UserPass = customerViewModel.UserPass
+                UserPass = customerViewModel.UserPass,
+                DateOfBirth = customerViewModel.DateOfBirth
             };
             return customer;
         }
