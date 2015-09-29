@@ -1,5 +1,5 @@
-﻿using OnlineShoppingWeb.Business;
-using OnlineShoppingWeb.Models;
+﻿using BusinessLayer;
+using OnlineShoppingWeb.Business;
 using OnlineShoppingWeb.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -36,9 +36,23 @@ namespace OnlineShoppingWeb.Controllers
             return View(ConvertToViewModelList(products).ProductList);
         }
         [HttpGet]
-        public ActionResult Create()
+        [ActionName("Create")]
+        public ActionResult Create_Get()
         {
-            return View();
+            return View(new ProductViewModel());
+        }
+
+        [HttpPost]
+        [ActionName("Create")]
+        public ActionResult Create_Post(ProductViewModel productViewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                var product = ConvertToProductFromViewModel(productViewModel);
+                service.CreateProduct(product);
+                return RedirectToAction("ProductManage");
+            }else
+            return View(productViewModel);
         }
 
         public ActionResult Upload(FileUploadViewModel fileUpload)
@@ -51,7 +65,6 @@ namespace OnlineShoppingWeb.Controllers
             product.Url = url;
             service.SaveProduct(product);
             ViewBag.Message = "The file is saved";
-
             return RedirectToAction("ProductManage");
 
         }

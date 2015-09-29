@@ -52,7 +52,7 @@
                             <td>@item.FirstName</td>
                             <td>@item.UserName</td>
                             <td>@item.UserPass</td>
-                            <td>@item.DateOfBirth</td>
+                            <td>@Html.DisplayFor(x=>x.CustomerList.Single(i=>i.CustomerID == item.CustomerID).DateOfBirth)</td>
                             <td>@item.Mobile</td>
                             <td>@item.Email</td>
                             <td>@item.Address</td>

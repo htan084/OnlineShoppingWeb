@@ -1,4 +1,5 @@
-﻿using BusinessLayer.Business;
+﻿using BusinessLayer;
+using BusinessLayer.Business;
 using OnlineShoppingWeb.Business;
 using OnlineShoppingWeb.ViewModels;
 using System;
@@ -134,7 +135,7 @@ namespace OnlineShoppingWeb.Controllers
         {
             var customerViewModel = new CustomerViewModel();
             customerViewModel.Address = customer.Address;
-            customerViewModel.CustomerID = customer.CustomerID;
+            customerViewModel.CustomerID = customer.CustomerId;
             customerViewModel.FirstName = customer.FirstName;
             customerViewModel.LastName = customer.LastName;
             customerViewModel.Mobile = customer.Mobile;
@@ -149,7 +150,7 @@ namespace OnlineShoppingWeb.Controllers
         {
             Customer customer = new Customer { 
                 Address = customerViewModel.Address,
-                CustomerID = customerViewModel.CustomerID,
+                CustomerId = customerViewModel.CustomerID,
                 Email = customerViewModel.Email,
                 FirstName = customerViewModel.FirstName,
                 LastName = customerViewModel.LastName,

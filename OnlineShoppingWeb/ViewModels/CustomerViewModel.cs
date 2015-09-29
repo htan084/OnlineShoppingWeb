@@ -25,6 +25,7 @@ namespace OnlineShoppingWeb.ViewModels
         [Required]
         public string Email { get; set; }
         [Required]
+        [DisplayFormat(DataFormatString="{0:d}")]
         public DateTime? DateOfBirth { get; set; }
     }
 }

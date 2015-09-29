@@ -1,4 +1,4 @@
-﻿using OnlineShoppingWeb.Models;
+﻿using BusinessLayer;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -34,14 +34,14 @@ namespace OnlineShoppingWeb.Business
             //        }
             //    }
             //}
-            CustomerContext products = new CustomerContext();
+            ZhenLiuOnlineDBContext products = new ZhenLiuOnlineDBContext();
             var productList = products.Products.ToList();
             return productList;
         }
 
         public void SaveProduct(Product product)
         {
-            string connectionString = ConfigurationManager.ConnectionStrings["CustomerContext"].ConnectionString;
+            string connectionString = ConfigurationManager.ConnectionStrings["ZhenLiuOnlineDBContext"].ConnectionString;
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
                 SqlCommand cmd = new SqlCommand("spSaveProduct", conn);
@@ -71,9 +71,36 @@ namespace OnlineShoppingWeb.Business
             }
         }
 
+        public void CreateProduct(Product product)
+        {
+            string connectionString = ConfigurationManager.ConnectionStrings["ZhenLiuOnlineDBContext"].ConnectionString;
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                SqlCommand cmd = new SqlCommand("spCreateProduct", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                SqlParameter paramName = new SqlParameter();
+                paramName.ParameterName = "@Name";
+                paramName.Value = product.Name;
+                cmd.Parameters.Add(paramName);
+
+                SqlParameter paramPrice = new SqlParameter();
+                paramPrice.ParameterName = "@Price";
+                paramPrice.Value = product.Price;
+                cmd.Parameters.Add(paramPrice);
+
+                SqlParameter paramUrl = new SqlParameter();
+                paramUrl.ParameterName = "@Url";
+                paramUrl.Value = product.Url;
+                cmd.Parameters.Add(paramUrl);
+
+                conn.Open();
+                cmd.ExecuteNonQuery();
+            }
+        }
+
         public void DeleteProduct(Product product)
         {
-            string connectionString = ConfigurationManager.ConnectionStrings["CustomerContext"].ConnectionString;
+            string connectionString = ConfigurationManager.ConnectionStrings["ZhenLiuOnlineDBContext"].ConnectionString;
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
                 SqlCommand cmd = new SqlCommand("spDeleteProduct", conn);

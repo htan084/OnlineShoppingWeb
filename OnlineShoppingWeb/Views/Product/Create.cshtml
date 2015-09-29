@@ -53,13 +53,8 @@
                     @Html.TextBoxFor(model => model.Price, new { @class = "form-control", id = "Price", placeholder = "Enter product name", name = "Price", style = "background-color:lightyellow" })
                     @Html.ValidationMessageFor(model => model.Price)
                 </div>
-
-                <div class="editor-label">
-                    @Html.LabelFor(model => model.Url)
-                </div>
                 <div class="editor-field">
-                    @Html.TextBoxFor(model => model.Url,new { @class = "form-control", id = "Price", placeholder = "Enter picture name", name = "Price", style = "background-color:lightyellow" }))
-                    @Html.ValidationMessageFor(model => model.Url)
+                    <input type="hidden" name="Url" id="Url" value="no image yet">
                 </div>
 
                 <p>

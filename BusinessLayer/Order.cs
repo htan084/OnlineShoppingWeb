@@ -12,18 +12,20 @@ namespace BusinessLayer
     using System;
     using System.Collections.Generic;
     
-    public partial class Product
+    public partial class Order
     {
-        public Product()
+        public Order()
         {
             this.OrderLines = new HashSet<OrderLine>();
         }
     
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public decimal Price { get; set; }
-        public string Url { get; set; }
+        public int OrderId { get; set; }
+        public int OrderNo { get; set; }
+        public System.DateTime OrderTime { get; set; }
+        public Nullable<int> Total { get; set; }
+        public Nullable<int> CustomerId { get; set; }
     
+        public virtual Customer Customer { get; set; }
         public virtual ICollection<OrderLine> OrderLines { get; set; }
     }
 }

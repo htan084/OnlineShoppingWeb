@@ -1,5 +1,4 @@
 ﻿@model IEnumerable<OnlineShoppingWeb.ViewModels.ProductViewModel>
-
 @{
     Layout = null;
 }
@@ -56,7 +55,7 @@
                                 @Html.DisplayFor(modelItem => item.Price)
                             </td>
                             <td>
-                                <img src="/Image/@item.Url" style="width:40px;height:40px" />
+                                @Html.Image(@item.Url, "width:40px;height:40px","image does not exit")
                             </td>
                             <td>
                                 @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |

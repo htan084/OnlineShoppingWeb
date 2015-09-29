@@ -22,7 +22,7 @@ namespace OnlineShoppingWeb
         protected void Application_Start()
         {
             AreaRegistration.RegisterAllAreas();
-            Database.SetInitializer<Models.CustomerContext>(null);//stop initialize database
+            Database.SetInitializer<BusinessLayer.ZhenLiuOnlineDBContext>(null);//stop initialize database
             WebApiConfig.Register(GlobalConfiguration.Configuration);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
