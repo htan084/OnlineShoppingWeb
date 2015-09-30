@@ -1,0 +1,13 @@
+﻿@model OnlineShoppingWeb.ViewModels.ProductViewModel
+
+<tr>
+    <td>
+        @Html.DisplayFor(modelItem => Model.Name)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => Model.Price)
+    </td>
+    <td>
+        @Html.Image(@Model.Url, "width:40px;height:40px", "image does not exit")
+    </td>
+</tr>

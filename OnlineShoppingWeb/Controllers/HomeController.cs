@@ -1,6 +1,7 @@
 ﻿using BusinessLayer;
 using BusinessLayer.Business;
 using OnlineShoppingWeb.Business;
+using OnlineShoppingWeb.Filter;
 using OnlineShoppingWeb.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -10,70 +11,71 @@ using System.Web.Mvc;
 
 namespace OnlineShoppingWeb.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
         private CustomerService service;
         public HomeController()
         {
-            service = new CustomerService();
+           this.service = new CustomerService();
         }
-
+        [AllowAnonymous]
         public ActionResult Index()
         {
             return View("Index");
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public ActionResult AddNew()
         {
             return View("Form", new CustomerViewModel());
         }
 
         [HttpPost]
+        [AllowAnonymous]
         public ActionResult SaveCustomer(CustomerViewModel customerViewModel, string btnSubmit)
         {
-
 
             switch (btnSubmit)
             {
                 case "Save":
-                    //UserService _userService = new UserService();
-                    //if (_userService.IsUserNameOccupied(customer.UserName))
-                    //{
-                    //    ModelState.AddModelError("UserName", "This user name has already been used");
-                    //}
+                    UserService _userService = new UserService();
+                    string userName = customerViewModel.UserName;
 
                     if ((string.IsNullOrEmpty(customerViewModel.UserName)) || customerViewModel.UserName.Length < 5 || customerViewModel.UserName.Length>9)
                     {
                         ModelState.AddModelError("UserName", "UserName needs to between 5 to 9 characters");
+                    } else if (_userService.IsUserNameOccupied(userName))
+                    {
+                        ModelState.AddModelError("UserName", "This user name has already been used");
                     }
                     if ((string.IsNullOrEmpty(customerViewModel.UserPass)) || customerViewModel.UserPass.Length < 5 || customerViewModel.UserPass.Length > 9)
                     {
                         ModelState.AddModelError("UserPass", "Password needs to between 5 to 9 characters");
                     }
+                   
+                 
                     if (ModelState.IsValid)
                     {
                         var customer = ConvertToCustomerFromViewModel(customerViewModel);
                         service.CreateNewCustomer(customer);
                         ViewBag.Message = "Customer " + customerViewModel.FirstName + "has been saved";
-
+                        return View();
                     }
                     else
                     {
                         return View("Form", customerViewModel);
                     }
-                    break;
 
                 case "Cancel":
                     return RedirectToAction("Index");
-
             }
-
-
             return RedirectToAction("Index");
         }
 
         [HttpPost]
+        [AdminFilter]
         public ActionResult Delete(int customerID)
         {
             var customer = service.GetCustomerById(customerID);
@@ -81,7 +83,7 @@ namespace OnlineShoppingWeb.Controllers
             return RedirectToAction("MyAdmin");
         }
 
-        [Authorize]
+        [AdminFilter]
         public ActionResult MyAdmin()
         {
             var customerListModel = new CustomerViewModelList();
@@ -97,6 +99,7 @@ namespace OnlineShoppingWeb.Controllers
 
         [HttpGet]
         [ActionName("Edit")]
+        [AdminFilter]
         public ActionResult Edit_Get(int customerID)
         {
             var customer = service.GetCustomerById(customerID);
@@ -113,6 +116,7 @@ namespace OnlineShoppingWeb.Controllers
         }
         [HttpPost]
         [ActionName("Edit")]
+        [AdminFilter]
         public ActionResult Edit_Post(int customerID)
         {
             var customer = service.GetCustomerById(customerID);

@@ -36,15 +36,14 @@
             <tbody>
                    @foreach (var item in Model.ProductList)
                    {
-                       <tr>
-                           <td>@item.Name</td>
-                           <td>@item.Price</td>
-                           <td>@Html.Image(@item.Url, "width:40px;height:40px", "image does not exit")</td>
-                       </tr>
+                       @Html.Partial("_Product", item);
                    }
                     
             </tbody>
         </table>
     </div>
+    @{
+        Html.RenderPartial("Footer",new FooterViewModel());
+    }
 </body>
 </html>

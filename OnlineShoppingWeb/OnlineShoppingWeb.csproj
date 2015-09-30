@@ -133,6 +133,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="CustomHtmlHelper\HtmlImageHelper.cs" />
+    <Compile Include="Filter\AdminFilter.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -140,6 +141,7 @@
     <Compile Include="ViewModels\CustomerViewModel.cs" />
     <Compile Include="ViewModels\CustomerViewModelList.cs" />
     <Compile Include="ViewModels\FileUploadViewModel.cs" />
+    <Compile Include="ViewModels\FooterViewModel.cs" />
     <Compile Include="ViewModels\ProductViewModel.cs" />
     <Compile Include="ViewModels\ProductViewModelList.cs" />
     <Compile Include="ViewModels\UserViewModel.cs" />
@@ -253,6 +255,10 @@
     <Content Include="Views\Authentication\LogOut.cshtml" />
     <Content Include="Views\Home\Edit.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\DateTime.cshtml" />
+    <Content Include="Views\Product\ShowProductShoppingPage.cshtml" />
+    <Content Include="Views\Shared\_Product.cshtml" />
+    <Content Include="Views\Shared\Footer.cshtml" />
+    <Content Include="Views\Home\SaveCustomer.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

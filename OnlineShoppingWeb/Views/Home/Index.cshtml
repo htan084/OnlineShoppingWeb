@@ -30,12 +30,15 @@
                     <span class="caret"></span>
                 </a>
                 <ul class="dropdown-menu">
-                    <li><a href="~/home/AddNew">Register</a></li>
-                    <li><a href="#">Customer</a></li>
+                    <li><a href="~/Home/AddNew">Register</a></li>
+                    <li><a href="~/Product/ShowProductShoppingPage">Customer</a></li>
                     <li><a href="~/Home/MyAdmin">Staff </a></li>
                 </ul>
             </li>
         </ul>
     </div>
+    @{
+        Html.RenderPartial("Footer", new FooterViewModel());
+    }
     </body>
 </html>

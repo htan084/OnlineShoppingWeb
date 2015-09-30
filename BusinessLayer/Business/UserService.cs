@@ -43,5 +43,17 @@ namespace BusinessLayer.Business
             }
 
         }
+
+        public UserStatus GetUserValidity(string userName)
+        {
+            if (userName == "zhenliu084")
+            {
+                return UserStatus.AuthenticatedAdmin;
+            }
+            else
+            {
+                return UserStatus.AuthentucatedUser;
+            }        
+        }
     }
 }

@@ -1,4 +1,5 @@
-﻿using BusinessLayer.Business;
+﻿using BusinessLayer;
+using BusinessLayer.Business;
 using OnlineShoppingWeb.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -29,7 +30,8 @@ namespace OnlineShoppingWeb.Controllers
         [HttpGet]
         public ActionResult Logout()
         {
-            return View();
+            FormsAuthentication.SignOut();
+            return View("OnlineShoppingWeb/Views/Home/Index");
         }
 
         [HttpPost]
@@ -40,7 +42,12 @@ namespace OnlineShoppingWeb.Controllers
                 var isUserValid = _userService.IsValidUser(userDetails.UserName, userDetails.Password);
                 if (isUserValid)
                 {
+                    UserStatus status = _userService.GetUserValidity(userDetails.UserName);
+                    var isAdmin = status == UserStatus.AuthenticatedAdmin ? true : false;
+
+                    Session["IsAdmin"] = isAdmin;
                     FormsAuthentication.SetAuthCookie(userDetails.UserName, false);
+                    Session["UserName"] = userDetails.UserName;
                     var returnUrl = Request.QueryString["ReturnURL"];
                     if (!string.IsNullOrEmpty(returnUrl))
                     {
@@ -48,7 +55,7 @@ namespace OnlineShoppingWeb.Controllers
                     }else{
                         return RedirectToAction("Index", "Home");
                     }
-                }else{  ModelState.AddModelError("CredentialError", "Invalid Username or Password");
+                }else{  ModelState.AddModelError("UserName", "Invalid Username or Password");
                     return View("Login");
                 }
            

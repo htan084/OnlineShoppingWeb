@@ -13,27 +13,6 @@ namespace OnlineShoppingWeb.Business
     {
         public List<Product> GetProducts()
         {
-            //var productList = new List<Product>();
-            //using (SqlConnection conn = new SqlConnection())
-            //{
-            //    conn.ConnectionString = System.Configuration.ConfigurationManager.ConnectionStrings["MyConnection"].ConnectionString;
-            //    conn.Open();
-            //    SqlCommand sql = new SqlCommand("select * from products", conn);
-            //    using (SqlDataReader reader = sql.ExecuteReader())
-            //    {
-            //        while (reader.Read())
-            //        {
-            //            var product = new Product
-            //            {
-            //                Id = Convert.ToInt32(reader["Id"]),
-            //                Name = reader["Name"].ToString(),
-            //                Price = Convert.ToDecimal(reader["Price"]),
-            //                Url = reader["Url"].ToString()
-            //            };
-            //            productList.Add(product);
-            //        }
-            //    }
-            //}
             ZhenLiuOnlineDBContext products = new ZhenLiuOnlineDBContext();
             var productList = products.Products.ToList();
             return productList;

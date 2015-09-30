@@ -1,5 +1,6 @@
 ﻿using BusinessLayer;
 using OnlineShoppingWeb.Business;
+using OnlineShoppingWeb.Filter;
 using OnlineShoppingWeb.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -29,7 +30,7 @@ namespace OnlineShoppingWeb.Controllers
             return View(ConvertToViewModelList(products));
         }
 
-
+        [AdminFilter]
         public ActionResult ProductManage()
         {
             var products = service.GetProducts();
@@ -37,6 +38,7 @@ namespace OnlineShoppingWeb.Controllers
         }
         [HttpGet]
         [ActionName("Create")]
+        [AdminFilter]
         public ActionResult Create_Get()
         {
             return View(new ProductViewModel());
@@ -44,6 +46,7 @@ namespace OnlineShoppingWeb.Controllers
 
         [HttpPost]
         [ActionName("Create")]
+        [AdminFilter]
         public ActionResult Create_Post(ProductViewModel productViewModel)
         {
             if (ModelState.IsValid)
@@ -54,7 +57,7 @@ namespace OnlineShoppingWeb.Controllers
             }else
             return View(productViewModel);
         }
-
+        [AdminFilter]
         public ActionResult Upload(FileUploadViewModel fileUpload)
         {
           
@@ -66,7 +69,6 @@ namespace OnlineShoppingWeb.Controllers
             service.SaveProduct(product);
             ViewBag.Message = "The file is saved";
             return RedirectToAction("ProductManage");
-
         }
 
 
@@ -79,6 +81,7 @@ namespace OnlineShoppingWeb.Controllers
         //}
         [HttpGet]
         [ActionName("Edit")]
+        [AdminFilter]
         public ActionResult Edit_Get(int id)
         {
             var product = service.GetProducts().Single(prod => prod.Id == id);
@@ -88,6 +91,7 @@ namespace OnlineShoppingWeb.Controllers
 
         [HttpPost]
         [ActionName("Edit")]
+        [AdminFilter]
         public ActionResult Edit_Post(int id)
         {
             var product = service.GetProducts().Single(prod => prod.Id == id);
@@ -104,6 +108,7 @@ namespace OnlineShoppingWeb.Controllers
 
 
         [HttpPost]
+        [AdminFilter]
         public ActionResult Delete(int id)
         {
             var product = service.GetProducts().Single(prod => prod.Id == id);
@@ -113,6 +118,13 @@ namespace OnlineShoppingWeb.Controllers
                 return RedirectToAction("ProductManage");
             }
             return View();
+        }
+
+        public ActionResult ShowProductShoppingPage()
+        {
+            var productList = service.GetProducts();
+            var productViewModelList = ConvertToViewModelList(productList);
+            return View(productViewModelList.ProductList);
         }
 
         public ProductViewModelList ConvertToViewModelList(List<Product> products)

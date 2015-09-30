@@ -67,5 +67,8 @@
             @Html.ActionLink("Back to List", "Index")
         </div>
     </div>
+    @{
+        Html.RenderPartial("Footer", new FooterViewModel());
+    }
 </body>
 </html>

@@ -96,6 +96,8 @@
             $("#address").val("");
         };
     </script>
-
+    @{
+        Html.RenderPartial("Footer", new FooterViewModel());
+    }
 </body>
 </html>
