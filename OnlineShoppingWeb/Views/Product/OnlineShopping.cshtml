@@ -24,19 +24,21 @@
 </head>
 <body>
     <div class="container">
-        <h2>My Product</h2>
+        <h2>Products</h2>
         <table class="table">
-            <thead>
+            <thead style="background-color:lightsalmon">
                 <tr>
                     <th>Name</th>
                     <th>Price</th>
                     <th>Picture</th>
                 </tr>             
             </thead>
-            <tbody>
+            <tbody style="background-color: lightblue">
                    @foreach (var item in Model.ProductList)
                    {
+                       
                        @Html.Partial("_Product", item);
+                       
                    }
                     
             </tbody>

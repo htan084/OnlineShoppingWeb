@@ -41,7 +41,6 @@ namespace BusinessLayer.Business
             {
                 return false;
             }
-
         }
 
         public UserStatus GetUserValidity(string userName)

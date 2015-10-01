@@ -22,7 +22,12 @@ namespace OnlineShoppingWeb.Controllers
         [AllowAnonymous]
         public ActionResult Index()
         {
-            return View("Index");
+            var productService = new ProductService();
+            var products = productService.GetProducts();
+            var productControl = new ProductController();
+            var listModel = productControl.ConvertToViewModelList(products).ProductList;
+
+            return View(listModel);
         }
 
         [HttpGet]

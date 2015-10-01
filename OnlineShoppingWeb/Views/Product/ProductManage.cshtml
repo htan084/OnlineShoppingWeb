@@ -28,7 +28,7 @@
             @Html.ActionLink("Create New", "Create")
         </p>
         <table class="table">
-            <thead>
+            <thead style="background-color:lightsalmon">
                 <tr>
                     <th>
                         @Html.DisplayNameFor(model => model.Name)
@@ -42,7 +42,7 @@
                     <th></th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody style="background-color: lightblue">
                 @foreach (var item in Model)
                 {
                     using (Html.BeginForm("Delete", "Product", new { id = item.Id }))
@@ -55,7 +55,7 @@
                                 @Html.DisplayFor(modelItem => item.Price)
                             </td>
                             <td>
-                                @Html.Image(@item.Url, "width:40px;height:40px","image does not exit")
+                                @Html.Image(@item.Url, "width:40px;height:40px", "image does not exit")
                             </td>
                             <td>
                                 @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
