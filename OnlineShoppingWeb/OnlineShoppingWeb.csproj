@@ -259,6 +259,7 @@
     <Content Include="Views\Shared\_Product.cshtml" />
     <Content Include="Views\Shared\Footer.cshtml" />
     <Content Include="Views\Home\SaveCustomer.cshtml" />
+    <Content Include="Views\Home\View1.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

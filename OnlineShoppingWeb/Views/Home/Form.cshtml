@@ -1,34 +1,4 @@
 ﻿@model OnlineShoppingWeb.ViewModels.CustomerViewModel
-@{
-    Layout = null;
-}
-<!DOCTYPE html>
-
-<html>
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <link href="~/Bootstrip/bootstrip335css.css" rel="stylesheet" />
-    <script src="~/Bootstrip/jquery-1.11.3.js"></script>
-    <script src="~/Bootstrip/bootstrip335js.js"></script>
-    <script src="~/Scripts/Validation.js"></script>
-    <script src="~/Scripts/jquery.validate.min.js"></script>
-    <link href="~/Content/themes/base/jquery.ui.all.css" rel="stylesheet" />
-    <script src="~/Scripts/jquery-1.8.2.min.js"></script>
-    <script src="~/Scripts/jquery-ui-1.8.24.min.js"></script>
-    <script src="~/scripts/datepick.js"></script>   
-    <style>
-        .carousel-inner > .item > img,
-        .carousel-inner > .item > a > img {
-            width: 70%;
-            margin: auto;
-        }
-    </style>
-    <title>Form</title>
-</head>
-<body>
-
     <div class="container">
         <h2>Please fill your Information</h2>
         <form role="form" action="~/Home/SaveCustomer" method="post" @*onsubmit=" return IsValid()"*@>
@@ -99,5 +69,3 @@
     @{
         Html.RenderPartial("Footer", new FooterViewModel());
     }
-</body>
-</html>

@@ -122,6 +122,7 @@ namespace OnlineShoppingWeb.Controllers
 
         public ActionResult ShowProductShoppingPage()
         {
+            var id = User.Identity;
             var productList = service.GetProducts();
             var productViewModelList = ConvertToViewModelList(productList);
             return View(productViewModelList.ProductList);
