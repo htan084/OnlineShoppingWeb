@@ -126,7 +126,7 @@ namespace OnlineShoppingWeb.Controllers
         [HttpGet]
         public ActionResult ShowProductShoppingPage(string search = "", int id = 1)
         {
-            //var id = User.Identity;
+            
 
             //service.GetProductsFromStoreProcedure(5, 1);
 
@@ -134,6 +134,12 @@ namespace OnlineShoppingWeb.Controllers
             int pageIndex = id;
             var productViewModelList = ShowPaging(productList, pageIndex);
             return View(productViewModelList.ProductList);
+        }
+
+        [HttpPost]
+        public void AddToCart(int id)
+        {
+            
         }
 
         public ProductViewModelList ShowPaging(List<Product> productList, int pageIndex)

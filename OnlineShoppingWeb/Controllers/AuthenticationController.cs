@@ -45,11 +45,8 @@ namespace OnlineShoppingWeb.Controllers
                 {
                     UserStatus status = _userService.GetUserValidity(userDetails.UserName);
                     var isAdmin = status == UserStatus.AuthenticatedAdmin ? true : false;
-                    Session["IsAdmin"] = isAdmin;
-                    
+                    Session["IsAdmin"] = isAdmin;                   
                     FormsAuthentication.SetAuthCookie(userDetails.UserName, false);
-                    string name = System.Web.HttpContext.Current.User.Identity.Name;
-                    Session["UserName"] = userDetails.UserName;
                     var returnUrl = Request.QueryString["ReturnURL"];
                     if (!string.IsNullOrEmpty(returnUrl))
                     {
@@ -60,7 +57,6 @@ namespace OnlineShoppingWeb.Controllers
                 }else{  ModelState.AddModelError("UserName", "Invalid Username or Password");
                     return View("Login");
                 }
-           
             }else{
                 return null;
             }  

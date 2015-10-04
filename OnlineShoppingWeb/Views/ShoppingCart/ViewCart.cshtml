@@ -1,0 +1,40 @@
+﻿@model IEnumerable<OnlineShoppingWeb.ViewModels.ShoppingItemViewModel>
+
+@{
+    ViewBag.Title = "Cart";
+}
+<div class="container">
+    <h2>Cart</h2>
+
+    <table class="table">
+        <thead style="background-color:lightsalmon">
+            <tr>
+                <th>
+                    Ordered products
+                </th>
+                <th>Quantity</th>
+                <th>Image</th>
+                <th>Price</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody style="background-color: lightblue">
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.Product.Name)</td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.quantity)
+                    </td>
+                    <td>@Html.Image(item.Product.Url, "width:40px;height:40px", "image does not exit")</td>
+                    <td><text>$</text>@(Convert.ToDouble(item.Product.Price) * item.quantity)</td>
+                    <td>
+                        @*@Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |*@
+                        @Html.ActionLink("Delete", "Delete", new { id = item.Product.Id })
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

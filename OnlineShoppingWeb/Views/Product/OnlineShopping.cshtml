@@ -6,8 +6,8 @@
     <p>
         @using (Html.BeginForm("OnlineShopping", "Product", FormMethod.Get))
         {
-            <b>Search By</b>
-            @Html.TextBox("Search") <input type="submit" value="Search">
+            <b>Search product</b>
+            <input type="text" name="search" style="background-color:lightyellow">   <input type="submit" class="btn btn-info" value="Search">
         }
     </p>
     <table class="table">
@@ -37,7 +37,7 @@
                     @{
                         <td style="cursor:pointer" onclick="DoPre(@(((PageModel)ViewBag.pageItem).CurrentIndex))">pre</td>
                         <td style="cursor:pointer" onclick="DoNext(@(((PageModel)ViewBag.pageItem).CurrentIndex))">next</td>
-                        <td colspan="2">Total : @(((PageModel)ViewBag.pageItem).PageNumber)</td>
+                        <td colspan="2">Total Page: @(((PageModel)ViewBag.pageItem).PageNumber)</td>
                     }
 
                 </tr>

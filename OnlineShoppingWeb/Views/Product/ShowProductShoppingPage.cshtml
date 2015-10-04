@@ -1,14 +1,15 @@
 ﻿@model IEnumerable<OnlineShoppingWeb.ViewModels.ProductViewModel>
-<h2>Welcome @Session["UserName"]!</h2>
-<p>
-    @using (Html.BeginForm("OnlineShopping", "Product", FormMethod.Get))
-    {
-        <b>Search By</b>
-        @Html.TextBox("Search") <input type="submit" value="Search">
-    }
-</p>
+<h2>Welcome @User.Identity.Name!</h2>
+
 
 <div class="container">
+    <p>
+        @using (Html.BeginForm("ShowProductShoppingPage", "Product", FormMethod.Get))
+        {
+            <b>Search Product</b>
+            <input type="text" name="search" style="background-color:lightyellow">    <input type="submit" value="Search" class="btn btn-info">
+        }
+    </p>
     <table class="table">
         <thead style="background-color:lightsalmon">
             <tr>
@@ -33,26 +34,32 @@
             }
             else
             {
+
                 foreach (var item in Model)
                 {
-                    <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Name)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Price)
-                        </td>
-                        <td>
-                            @Html.Image(@item.Url, "width:40px;height:40px", "image does not exit")
-                        </td>
-                        <td>@Html.TextBox(@item.Id.ToString())
-                    </tr>
+                    using (Html.BeginForm("AddToCart", "ShoppingCart", new { id = @item.Id }))
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Name)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Price)
+                            </td>
+                            <td>
+                                @Html.Image(@item.Url, "width:40px;height:40px", "image does not exit")
+                            </td>
+                            <td><input type="text" name="Quantity" /> 
+                                <input type="submit" value="Add to chart" class="btn btn-success" /> </td>
+                        </tr>
+                    }
                 }
                 <tr>
                     @{
                         <td style="cursor:pointer" onclick="DoPre(@(((PageModel)ViewBag.pageItem).CurrentIndex))">pre</td>
                         <td style="cursor:pointer" onclick="DoNext(@(((PageModel)ViewBag.pageItem).CurrentIndex))">next</td>
-                        <td colspan="2">Total : @(((PageModel)ViewBag.pageItem).PageNumber)</td>
+                        <td >Total Page: @(((PageModel)ViewBag.pageItem).PageNumber)</td>
+                        <td><input type="button" value="View my shopping cart" class="btn btn-success" onclick="location.href='@Url.Action("ViewCart", "ShoppingCart")'" /></td>
                     }
 
                 </tr>

@@ -132,6 +132,7 @@
     <Compile Include="Controllers\AuthenticationController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
+    <Compile Include="Controllers\ShoppingCartController.cs" />
     <Compile Include="CustomHtmlHelper\HtmlImageHelper.cs" />
     <Compile Include="Filter\AdminFilter.cs" />
     <Compile Include="Global.asax.cs">
@@ -145,6 +146,7 @@
     <Compile Include="ViewModels\PageModel.cs" />
     <Compile Include="ViewModels\ProductViewModel.cs" />
     <Compile Include="ViewModels\ProductViewModelList.cs" />
+    <Compile Include="ViewModels\ShoppingItemViewModel.cs" />
     <Compile Include="ViewModels\UserViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -260,6 +262,7 @@
     <Content Include="Views\Shared\_Product.cshtml" />
     <Content Include="Views\Shared\Footer.cshtml" />
     <Content Include="Views\Home\SaveCustomer.cshtml" />
+    <Content Include="Views\ShoppingCart\ViewCart.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

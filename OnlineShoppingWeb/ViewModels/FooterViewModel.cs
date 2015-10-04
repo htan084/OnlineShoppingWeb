@@ -11,7 +11,7 @@ namespace OnlineShoppingWeb.ViewModels
         public int Year { get; set; }
         public FooterViewModel()
         {
-            this.CompanyName = "Liu Zhen's online shoop";
+            this.CompanyName = "Liu Zhen's online shop";
             this.Year = DateTime.Now.Year;
         }
     }

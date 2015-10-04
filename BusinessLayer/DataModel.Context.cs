@@ -22,10 +22,10 @@ namespace BusinessLayer
         {
         }
     
-        protected override void OnModelCreating(DbModelBuilder modelBuilder)
-        {
-            //throw new UnintentionalCodeFirstException();
-        }
+        //protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        //{
+        //    throw new UnintentionalCodeFirstException();
+        //}
     
         public virtual DbSet<Customer> Customers { get; set; }
         public virtual DbSet<OrderLine> OrderLines { get; set; }

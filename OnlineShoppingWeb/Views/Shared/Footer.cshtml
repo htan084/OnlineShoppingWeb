@@ -1,6 +1,13 @@
 ﻿@model OnlineShoppingWeb.ViewModels.FooterViewModel
+           
 <div style="text-align:right;background-color: silver;color: darkcyan;border: 1px solid gray;margin-top:2px;padding-right:10px;">
 
-    @Model.CompanyName &copy; @Model.Year
-
+    @Model.CompanyName &copy; @Model.Year 
+    <button type="button" class="btn btn-primary" onclick="BackToHomePage()">Back to main page</button>
 </div>
+<script>
+    function BackToHomePage() {
+        window.location = "../../Home/Index";
+    }
+
+</script>
