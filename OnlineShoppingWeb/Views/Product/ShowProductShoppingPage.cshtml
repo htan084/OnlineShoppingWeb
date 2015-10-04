@@ -1,23 +1,39 @@
 ﻿@model IEnumerable<OnlineShoppingWeb.ViewModels.ProductViewModel>
-    <h2>Welcome @Session["UserName"]!</h2>
-    <div class="container">
-        <table class="table">
-            <thead style="background-color:lightsalmon">
+<h2>Welcome @Session["UserName"]!</h2>
+<p>
+    @using (Html.BeginForm("OnlineShopping", "Product", FormMethod.Get))
+    {
+        <b>Search By</b>
+        @Html.TextBox("Search") <input type="submit" value="Search">
+    }
+</p>
+
+<div class="container">
+    <table class="table">
+        <thead style="background-color:lightsalmon">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Price)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Url)
+                </th>
+                <th>Order Quantity</th>
+            </tr>
+        </thead>
+        <tbody style="background-color: lightblue">
+            @if (Model.Count() == 0)
+            {
                 <tr>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Name)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Price)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Url)
-                    </th>
-                    <th>Order Quantity</th>
+                    <td colspan="4"> no rows match search criteria</td>
                 </tr>
-            </thead>
-            <tbody style="background-color: lightblue">
-                @foreach (var item in Model)
+            }
+            else
+            {
+                foreach (var item in Model)
                 {
                     <tr>
                         <td>
@@ -29,13 +45,108 @@
                         <td>
                             @Html.Image(@item.Url, "width:40px;height:40px", "image does not exit")
                         </td>
-                        <td >@Html.TextBox(@item.Id.ToString())
+                        <td>@Html.TextBox(@item.Id.ToString())
                     </tr>
                 }
-            </tbody>
+                <tr>
+                    @{
+                        <td style="cursor:pointer" onclick="DoPre(@(((PageModel)ViewBag.pageItem).CurrentIndex))">pre</td>
+                        <td style="cursor:pointer" onclick="DoNext(@(((PageModel)ViewBag.pageItem).CurrentIndex))">next</td>
+                        <td colspan="2">Total : @(((PageModel)ViewBag.pageItem).PageNumber)</td>
+                    }
 
-        </table>
-    </div>
-    @{
-        Html.RenderPartial("Footer", new FooterViewModel());
+                </tr>
+            }
+        </tbody>
+
+    </table>
+</div>
+<script type="text/javascript">
+    var total = @(((PageModel)ViewBag.pageItem).PageNumber)
+
+    function DoPre(index) {
+        if (index == 1) {
+            alert("already first page");
+        } else {
+            index = index - 1;
+            window.location = "/Product/ShowProductShoppingPage" + "/" + index;
+        }
     }
+
+    function DoNext(index) {
+        if (index == total) {
+            alert("already last last");
+        } else {
+            index = index + 1;
+            window.location = "/Product/ShowProductShoppingPage" + "/" + index;
+        }
+    }
+</script>
+
+@*<div id="MainDiv">
+            <ul>
+                @foreach (var item in Model)
+                {
+                    <li>
+                        @Html.Image(@item.Url, "width:40px;height:40px", "image does not exit") <br>
+                        @Html.DisplayFor(modelItem => item.Name)
+                        @Html.DisplayFor(modelItem => item.Price)
+                    </li>
+
+                }
+
+
+            </ul>
+
+
+
+        </div>
+
+    </div>
+
+
+    <script type="text/javascript">
+        var total = @(((PageModel)ViewBag.pageItem).PageNumber)
+
+        function DoPre(index) {
+            if (index == 1) {
+                alert("already first page");
+            } else {
+                index = index - 1;
+                window.location = "/Product/ShowProductShoppingPage" + "/" + index;
+            }
+        }
+
+        function DoNext(index) {
+            if (index == total) {
+                alert("already last last");
+            } else {
+                index = index + 1;
+                window.location = "/Product/ShowProductShoppingPage" + "/" + index;
+            }
+        }
+    </script>
+
+
+
+
+
+    <style type="text/css">
+        li {
+            list-style:none;
+            float:left;
+            height:200px;
+            width:200px;
+            border:1px solid #000000;
+            margin-left:10rem;
+            margin-top:10rem;
+        }
+    </style>
+
+    <div>
+        <span style="cursor:pointer" onclick="DoPre(@(((PageModel)ViewBag.pageItem).CurrentIndex))">pre</span>
+        <span style="cursor:pointer" onclick="DoNext(@(((PageModel)ViewBag.pageItem).CurrentIndex))">next</span>
+        <span colspan="2">Total : @(((PageModel)ViewBag.pageItem).PageNumber)</span>
+    </div>*@
+
+

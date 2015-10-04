@@ -13,6 +13,7 @@ namespace OnlineShoppingWeb.ViewModels
         public string Name { get; set; }
         [Required]
         public string Price { get; set; }
+        [Display(Name = "Image")]
         public string Url { get; set; }
     }
 }

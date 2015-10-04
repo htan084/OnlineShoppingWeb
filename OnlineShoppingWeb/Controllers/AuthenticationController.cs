@@ -39,12 +39,14 @@ namespace OnlineShoppingWeb.Controllers
         {
             if (ModelState.IsValid)
             {
+                
                 var isUserValid = _userService.IsValidUser(userDetails.UserName, userDetails.Password);
                 if (isUserValid)
                 {
                     UserStatus status = _userService.GetUserValidity(userDetails.UserName);
                     var isAdmin = status == UserStatus.AuthenticatedAdmin ? true : false;
                     Session["IsAdmin"] = isAdmin;
+                    
                     FormsAuthentication.SetAuthCookie(userDetails.UserName, false);
                     string name = System.Web.HttpContext.Current.User.Identity.Name;
                     Session["UserName"] = userDetails.UserName;

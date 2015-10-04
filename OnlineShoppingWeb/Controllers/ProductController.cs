@@ -23,11 +23,13 @@ namespace OnlineShoppingWeb.Controllers
         }
 
         [AllowAnonymous]
-        public ActionResult OnlineShopping()
+        public ActionResult OnlineShopping(string search="",int id = 1)
         {
-            var products = service.GetProducts();
+            var products = service.GetProducts().Where(x => x.Name.StartsWith(search) || search == "").ToList();
+            int pageIndex = id;
+            var productViewModelList = ShowPaging(products, pageIndex);
 
-            return View(ConvertToViewModelList(products));
+            return View(productViewModelList);
         }
 
         [AdminFilter]
@@ -120,12 +122,38 @@ namespace OnlineShoppingWeb.Controllers
             return View();
         }
 
-        public ActionResult ShowProductShoppingPage()
+        int rowNumber = 5;
+        [HttpGet]
+        public ActionResult ShowProductShoppingPage(string search = "", int id = 1)
         {
-            var id = User.Identity;
-            var productList = service.GetProducts();
-            var productViewModelList = ConvertToViewModelList(productList);
+            //var id = User.Identity;
+
+            //service.GetProductsFromStoreProcedure(5, 1);
+
+            var productList = service.GetProducts().Where(x => x.Name.StartsWith(search) || search == "").ToList();
+            int pageIndex = id;
+            var productViewModelList = ShowPaging(productList, pageIndex);
             return View(productViewModelList.ProductList);
+        }
+
+        public ProductViewModelList ShowPaging(List<Product> productList, int pageIndex)
+        {
+
+            int start = (pageIndex - 1) * rowNumber;
+
+            var pagedList = productList.Skip(start).Take(rowNumber).ToList();
+
+            var productViewModelList = ConvertToViewModelList(pagedList);
+
+            double page = Math.Ceiling(productList.Count * 1.0 / rowNumber * 1.0);
+
+            PageModel pageItem = new PageModel()
+            {
+                CurrentIndex = pageIndex,
+                PageNumber = Convert.ToInt32((page)),
+            };
+            ViewBag.pageItem = pageItem;
+            return productViewModelList;
         }
 
         public ProductViewModelList ConvertToViewModelList(List<Product> products)

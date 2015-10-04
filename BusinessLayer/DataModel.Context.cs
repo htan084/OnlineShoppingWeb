@@ -12,6 +12,8 @@ namespace BusinessLayer
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
+    using System.Data.Entity.Core.Objects;
+    using System.Linq;
     
     public partial class ZhenLiuOnlineDBContext : DbContext
     {
@@ -20,14 +22,27 @@ namespace BusinessLayer
         {
         }
     
-        //protected override void OnModelCreating(DbModelBuilder modelBuilder)
-        //{
-        //    throw new UnintentionalCodeFirstException();
-        //}
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            //throw new UnintentionalCodeFirstException();
+        }
     
         public virtual DbSet<Customer> Customers { get; set; }
         public virtual DbSet<OrderLine> OrderLines { get; set; }
         public virtual DbSet<Order> Orders { get; set; }
         public virtual DbSet<Product> Products { get; set; }
+    
+        public virtual ObjectResult<sp_ShowProductShoppingPage_Result> sp_ShowProductShoppingPage(ObjectParameter totalRow, Nullable<int> index, Nullable<int> rowNumber)
+        {
+            var indexParameter = index.HasValue ?
+                new ObjectParameter("index", index) :
+                new ObjectParameter("index", typeof(int));
+    
+            var rowNumberParameter = rowNumber.HasValue ?
+                new ObjectParameter("rowNumber", rowNumber) :
+                new ObjectParameter("rowNumber", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_ShowProductShoppingPage_Result>("sp_ShowProductShoppingPage", totalRow, indexParameter, rowNumberParameter);
+        }
     }
 }

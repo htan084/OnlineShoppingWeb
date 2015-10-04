@@ -32,5 +32,8 @@
     @*@Scripts.Render("~/bundles/jquery")*@
     @RenderSection("scripts", required: false)
     @ViewData["AuthorizationError"]
+    @{
+        Html.RenderPartial("Footer", new FooterViewModel());
+    }
 </body>
 </html>

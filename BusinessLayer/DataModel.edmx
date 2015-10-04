@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="Models.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="Models.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Customers">
           <Key>
             <PropertyRef Name="CustomerId" />
@@ -26,7 +26,7 @@
           <Property Name="OrderId" Type="int" Nullable="false" />
           <Property Name="Total" Type="int" />
           <Property Name="ProductId" Type="int" Nullable="false" />
-          <Property Name="orderlineId" Type="int" Nullable="false" />
+          <Property Name="orderlineId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
         </EntityType>
         <EntityType Name="Orders">
           <Key>
@@ -47,7 +47,7 @@
           <Property Name="Price" Type="decimal" Precision="30" Scale="0" Nullable="false" />
           <Property Name="Url" Type="varchar" MaxLength="30" Nullable="false" />
         </EntityType>
-        <Association Name="FK__OrderLine__Order__4222D4EF">
+        <Association Name="FK__OrderLine__Order__49C3F6B7">
           <End Role="Orders" Type="Self.Orders" Multiplicity="1" />
           <End Role="OrderLine" Type="Self.OrderLine" Multiplicity="*" />
           <ReferentialConstraint>
@@ -59,7 +59,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__OrderLine__Produ__4316F928">
+        <Association Name="FK__OrderLine__Produ__4AB81AF0">
           <End Role="Products" Type="Self.Products" Multiplicity="1" />
           <End Role="OrderLine" Type="Self.OrderLine" Multiplicity="*" />
           <ReferentialConstraint>
@@ -83,16 +83,21 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="sp_ShowProductShoppingPage" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="totalRow" Type="int" Mode="InOut" />
+          <Parameter Name="index" Type="int" Mode="In" />
+          <Parameter Name="rowNumber" Type="int" Mode="In" />
+        </Function>
         <EntityContainer Name="ModelsStoreContainer">
           <EntitySet Name="Customers" EntityType="Self.Customers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OrderLine" EntityType="Self.OrderLine" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Orders" EntityType="Self.Orders" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Products" EntityType="Self.Products" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK__OrderLine__Order__4222D4EF" Association="Self.FK__OrderLine__Order__4222D4EF">
+          <AssociationSet Name="FK__OrderLine__Order__49C3F6B7" Association="Self.FK__OrderLine__Order__49C3F6B7">
             <End Role="Orders" EntitySet="Orders" />
             <End Role="OrderLine" EntitySet="OrderLine" />
           </AssociationSet>
-          <AssociationSet Name="FK__OrderLine__Produ__4316F928" Association="Self.FK__OrderLine__Produ__4316F928">
+          <AssociationSet Name="FK__OrderLine__Produ__4AB81AF0" Association="Self.FK__OrderLine__Produ__4AB81AF0">
             <End Role="Products" EntitySet="Products" />
             <End Role="OrderLine" EntitySet="OrderLine" />
           </AssociationSet>
@@ -101,8 +106,7 @@
             <End Role="Orders" EntitySet="Orders" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="Models" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -207,7 +211,19 @@
             <End Role="Products" EntitySet="Products" />
             <End Role="OrderLine" EntitySet="OrderLines" />
           </AssociationSet>
+          <FunctionImport Name="sp_ShowProductShoppingPage" ReturnType="Collection(Models.sp_ShowProductShoppingPage_Result)">
+            <Parameter Name="totalRow" Mode="InOut" Type="Int32" />
+            <Parameter Name="index" Mode="In" Type="Int32" />
+            <Parameter Name="rowNumber" Mode="In" Type="Int32" />
+          </FunctionImport>
         </EntityContainer>
+        <ComplexType Name="sp_ShowProductShoppingPage_Result">
+          <Property Type="Int64" Name="rowNum" Nullable="true" />
+          <Property Type="Int32" Name="Id" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="30" />
+          <Property Type="Decimal" Name="Price" Nullable="false" Precision="30" Scale="0" />
+          <Property Type="String" Name="Url" Nullable="false" MaxLength="30" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -260,6 +276,17 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="sp_ShowProductShoppingPage" FunctionName="Models.Store.sp_ShowProductShoppingPage">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Models.sp_ShowProductShoppingPage_Result">
+                <ScalarProperty Name="rowNum" ColumnName="rowNum" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Url" ColumnName="Url" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

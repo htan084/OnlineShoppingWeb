@@ -142,6 +142,7 @@
     <Compile Include="ViewModels\CustomerViewModelList.cs" />
     <Compile Include="ViewModels\FileUploadViewModel.cs" />
     <Compile Include="ViewModels\FooterViewModel.cs" />
+    <Compile Include="ViewModels\PageModel.cs" />
     <Compile Include="ViewModels\ProductViewModel.cs" />
     <Compile Include="ViewModels\ProductViewModelList.cs" />
     <Compile Include="ViewModels\UserViewModel.cs" />
@@ -259,7 +260,6 @@
     <Content Include="Views\Shared\_Product.cshtml" />
     <Content Include="Views\Shared\Footer.cshtml" />
     <Content Include="Views\Home\SaveCustomer.cshtml" />
-    <Content Include="Views\Home\View1.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

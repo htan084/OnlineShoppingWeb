@@ -1,27 +1,68 @@
-﻿
-@using OnlineShoppingWeb.ViewModels
+﻿@using OnlineShoppingWeb.ViewModels
 @model OnlineShoppingWeb.ViewModels.ProductViewModelList
-    <div class="container">
-        <h2>Products</h2>
-        <table class="table">
-            <thead style="background-color:lightsalmon">
+
+<div class="container">
+    <h2>Products</h2>
+    <p>
+        @using (Html.BeginForm("OnlineShopping", "Product", FormMethod.Get))
+        {
+            <b>Search By</b>
+            @Html.TextBox("Search") <input type="submit" value="Search">
+        }
+    </p>
+    <table class="table">
+        <thead style="background-color:lightsalmon">
+            <tr>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Picture</th>
+            </tr>
+        </thead>
+        <tbody style="background-color: lightblue">
+            @if (Model.ProductList.Count() == 0)
+            {
                 <tr>
-                    <th>Name</th>
-                    <th>Price</th>
-                    <th>Picture</th>
-                </tr>             
-            </thead>
-            <tbody style="background-color: lightblue">
-                   @foreach (var item in Model.ProductList)
-                   {
-                       
-                       @Html.Partial("_Product", item);
-                       
-                   }
-                    
-            </tbody>
-        </table>
-    </div>
-    @{
-        Html.RenderPartial("Footer",new FooterViewModel());
-    }
+                    <td colspan="4"> no rows match search criteria</td>
+                </tr>
+            }
+            else
+            {
+                foreach (var item in Model.ProductList)
+                {
+
+                    @Html.Partial("_Product", item);
+
+                }
+                <tr>
+                    @{
+                        <td style="cursor:pointer" onclick="DoPre(@(((PageModel)ViewBag.pageItem).CurrentIndex))">pre</td>
+                        <td style="cursor:pointer" onclick="DoNext(@(((PageModel)ViewBag.pageItem).CurrentIndex))">next</td>
+                        <td colspan="2">Total : @(((PageModel)ViewBag.pageItem).PageNumber)</td>
+                    }
+
+                </tr>
+            }
+        </tbody>
+    </table>
+    <script type="text/javascript">
+        var total = @(((PageModel)ViewBag.pageItem).PageNumber)
+
+        function DoPre(index) {
+            if (index == 1) {
+                alert("already first page");
+            } else {
+                index = index - 1;
+                window.location = "/Product/OnlineShopping" + "/" + index;
+            }
+        }
+
+        function DoNext(index) {
+            if (index == total) {
+                alert("already last page");
+            } else {
+                index = index + 1;
+                window.location = "/Product/OnlineShopping" + "/" + index;
+            }
+        }
+    </script>
+</div>

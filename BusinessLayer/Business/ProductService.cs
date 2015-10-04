@@ -11,12 +11,27 @@ namespace OnlineShoppingWeb.Business
 {
     public class ProductService
     {
+
         public List<Product> GetProducts()
         {
+
             ZhenLiuOnlineDBContext products = new ZhenLiuOnlineDBContext();
             var productList = products.Products.ToList();
             return productList;
         }
+
+        
+           //@totalRow int output,
+           //@index int = 1,
+           //@rowNumber int = 5
+        //public void GetProductsFromStoreProcedure(int rowNumber, int index)
+        //{
+
+        //    ZhenLiuOnlineDBContext products = new ZhenLiuOnlineDBContext();
+        //    System.Data.Entity.Core.Objects.ObjectParameter obj = new System.Data.Entity.Core.Objects.ObjectParameter("totalRow", SqlDbType.Int);
+
+        //    var s = products.sp_ShowProductShoppingPage(obj, index, rowNumber).ToList();
+        //}
 
         public void SaveProduct(Product product)
         {
