@@ -3,6 +3,7 @@
 @{
     ViewBag.Title = "Cart";
 }
+@Html.ValidationSummary(true)
 <div class="container">
     <h2>Cart</h2>
 
@@ -31,7 +32,7 @@
                     <td>
                         @*@Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
                             @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |*@
-                        @Html.ActionLink("Delete", "Delete", new { id = item.Product.Id })
+                        @Html.ActionLink("Delete", "Delete", "ShoppingCart",new { id = item.Product.Id},null)
                     </td>
                 </tr>
             }

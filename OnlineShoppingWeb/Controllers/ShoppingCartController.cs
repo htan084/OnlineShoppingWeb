@@ -37,32 +37,48 @@ namespace OnlineShoppingWeb.Controllers
             }
             return -1;
         }
+
+        [HttpPost]
         public ActionResult AddToCart(int id)
         {
-            var productViewModel = ConvertToViewModelFromProduct(db.Products.Find(id));
-            int quantity = Convert.ToInt32(Request["Quantity"]);
-            if (Session["Cart"] == null)
+            int num = 0;
+            bool isValidQuantity = Int32.TryParse(Request["Quantity"],out num);
+            if ((!isValidQuantity) || num>100 || num<0)
             {
-                List<ShoppingItemViewModel> cart = new List<ShoppingItemViewModel>();
-                cart.Add(new ShoppingItemViewModel(productViewModel, quantity));
-                Session["Cart"] = cart;
+                ModelState.AddModelError("Quantity", "please enter a valid number");
             }
-            else
+            if (ModelState.IsValid)
             {
-                List<ShoppingItemViewModel> cart = (List<ShoppingItemViewModel>)Session["Cart"];
-                int index = IsExisting(id);
-                if (index == -1)
+                var productViewModel = ConvertToViewModelFromProduct(db.Products.Find(id));
+                int quantity = Convert.ToInt32(Request["Quantity"]);
+                if (Session["Cart"] == null)
                 {
+                    List<ShoppingItemViewModel> cart = new List<ShoppingItemViewModel>();
                     cart.Add(new ShoppingItemViewModel(productViewModel, quantity));
+                    Session["Cart"] = cart;
                 }
                 else
                 {
-                    cart[index].quantity+= quantity;
+                    List<ShoppingItemViewModel> cart = (List<ShoppingItemViewModel>)Session["Cart"];
+                    int index = IsExisting(id);
+                    if (index == -1)
+                    {
+                        cart.Add(new ShoppingItemViewModel(productViewModel, quantity));
+                    }
+                    else
+                    {
+                        cart[index].quantity += quantity;
+                    }
+                    Session["Cart"] = cart;
                 }
-                Session["Cart"] = cart;
+                return RedirectToAction("ShowProductShoppingPage", "Product");
             }
-            return RedirectToAction("ShowProductShoppingPage", "Product");
+            else
+            {
+                return Content("<script> alert('please enter a valid quantity number');window.location='/Product/ShowProductShoppingPage'</script>");
+            }
         }
+        
 
         public ActionResult Delete(int id)
         {
@@ -70,7 +86,7 @@ namespace OnlineShoppingWeb.Controllers
             List<ShoppingItemViewModel> cart = (List<ShoppingItemViewModel>)Session["Cart"];
             cart.RemoveAt(index);
             Session["Cart"] = cart;
-            return RedirectToAction("Cart");
+            return RedirectToAction("ViewCart");
         }
 
         public ProductViewModel ConvertToViewModelFromProduct(Product product)

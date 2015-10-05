@@ -136,11 +136,6 @@ namespace OnlineShoppingWeb.Controllers
             return View(productViewModelList.ProductList);
         }
 
-        [HttpPost]
-        public void AddToCart(int id)
-        {
-            
-        }
 
         public ProductViewModelList ShowPaging(List<Product> productList, int pageIndex)
         {

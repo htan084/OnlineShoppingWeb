@@ -1,6 +1,7 @@
 ﻿using OnlineShoppingWeb.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,7 +20,7 @@ namespace OnlineShoppingWeb.ViewModels
             set { product = value; }
         }
 
-
+        [Required]
         public int quantity{get;set;}
 
         public ShoppingItemViewModel()
