@@ -78,7 +78,29 @@ namespace OnlineShoppingWeb.Controllers
                 return Content("<script> alert('please enter a valid quantity number');window.location='/Product/ShowProductShoppingPage'</script>");
             }
         }
-        
+
+        [HttpPost]
+        public ActionResult EditQuantity(int id)
+        {
+            int quantity = 0;
+            bool isValidQuantity = Int32.TryParse(Request["Quantity"], out quantity);
+            if ((!isValidQuantity) || quantity > 100 || quantity < 0)
+            {
+                ModelState.AddModelError("Quantity", "please enter a valid number");
+            }
+            if (ModelState.IsValid)
+            {
+                int index = IsExisting(id);
+                List<ShoppingItemViewModel> cart = (List<ShoppingItemViewModel>)Session["Cart"];
+                cart[index].quantity = quantity;
+                Session["Cart"] = cart;
+                return RedirectToAction("ViewCart");
+            }
+            else
+            {
+                return Content("<script> alert('please enter a valid quantity number');window.location='/ShoppingCart/ViewCart'</script>");
+            }
+        }
 
         public ActionResult Delete(int id)
         {
@@ -89,6 +111,61 @@ namespace OnlineShoppingWeb.Controllers
             return RedirectToAction("ViewCart");
         }
 
+        [HttpGet]
+        public ActionResult CheckOut()
+        {
+            string userName = User.Identity.Name;
+            OrderLine orderLine = new OrderLine { 
+                
+            
+            };
+            Random rad = new Random();
+            Order order = new Order {
+                Customer = db.Customers.Single(x => x.UserName == userName),
+                OrderNo = rad.Next(1,10000),
+                CustomerId = db.Customers.Single(x => x.UserName == userName).CustomerId,
+                OrderTime = DateTime.Now.Date,
+                Total = CaculateTotalPrice()
+            };
+            db.Orders.Add(order);
+
+            foreach (var item in (List<ShoppingItemViewModel>)Session["Cart"])
+            {
+                OrderLine orderItem = new OrderLine
+                {
+                    Order = order,
+                    OrderId = order.OrderId,
+                    ProductId = item.Product.Id,
+                    Product = db.Products.Single(x=>x.Id == item.Product.Id),
+                    Quantity = item.quantity
+                };
+                db.OrderLines.Add(orderItem);
+            }
+            db.SaveChanges();
+            Session["Cart"] = null;
+            return  Content("<script> alert('Congratulations!your order has been sent to the seller');window.location='/Product/ShowProductShoppingPage'</script>");
+        }
+
+        public double CaculateTotalPrice()
+        {
+            double totalPrice = 0.0;
+            List<ShoppingItemViewModel> cart = (List<ShoppingItemViewModel>)Session["Cart"];
+            if (cart != null)
+            {
+                foreach (var item in cart)
+                {
+                    totalPrice += (Convert.ToDouble(item.Product.Price) * item.quantity);
+                }
+            }
+            return totalPrice;
+        }
+
+        [ChildActionOnly]
+        public ActionResult ShowTotalPrice()
+        {
+            double total = CaculateTotalPrice();
+            return View(total);
+        }
         public ProductViewModel ConvertToViewModelFromProduct(Product product)
         {
             var productViewModel = new ProductViewModel();

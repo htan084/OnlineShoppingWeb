@@ -21,7 +21,7 @@ namespace BusinessLayer
     
         public int Id { get; set; }
         public string Name { get; set; }
-        public decimal Price { get; set; }
+        public Nullable<decimal> Price { get; set; }
         public string Url { get; set; }
     
         public virtual ICollection<OrderLine> OrderLines { get; set; }

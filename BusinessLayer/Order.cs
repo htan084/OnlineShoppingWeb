@@ -22,7 +22,7 @@ namespace BusinessLayer
         public int OrderId { get; set; }
         public int OrderNo { get; set; }
         public System.DateTime OrderTime { get; set; }
-        public Nullable<int> Total { get; set; }
+        public Nullable<double> Total { get; set; }
         public Nullable<int> CustomerId { get; set; }
     
         public virtual Customer Customer { get; set; }

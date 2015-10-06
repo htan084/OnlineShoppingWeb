@@ -32,11 +32,11 @@
           <Key>
             <PropertyRef Name="OrderId" />
           </Key>
-          <Property Name="OrderId" Type="int" Nullable="false" />
+          <Property Name="OrderId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="OrderNo" Type="int" Nullable="false" />
           <Property Name="OrderTime" Type="datetime" Nullable="false" />
-          <Property Name="Total" Type="int" />
           <Property Name="CustomerId" Type="int" />
+          <Property Name="Total" Type="decimal" Precision="18" Scale="3" />
         </EntityType>
         <EntityType Name="Products">
           <Key>
@@ -44,34 +44,10 @@
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="30" Nullable="false" />
-          <Property Name="Price" Type="decimal" Precision="30" Scale="0" Nullable="false" />
           <Property Name="Url" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="Price" Type="decimal" Precision="18" Scale="3" />
         </EntityType>
-        <Association Name="FK__OrderLine__Order__49C3F6B7">
-          <End Role="Orders" Type="Self.Orders" Multiplicity="1" />
-          <End Role="OrderLine" Type="Self.OrderLine" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Orders">
-              <PropertyRef Name="OrderId" />
-            </Principal>
-            <Dependent Role="OrderLine">
-              <PropertyRef Name="OrderId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__OrderLine__Produ__4AB81AF0">
-          <End Role="Products" Type="Self.Products" Multiplicity="1" />
-          <End Role="OrderLine" Type="Self.OrderLine" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Products">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="OrderLine">
-              <PropertyRef Name="ProductId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Orders__Customer__398D8EEE">
+        <Association Name="FK__Orders__Customer__5070F446">
           <End Role="Customers" Type="Self.Customers" Multiplicity="0..1" />
           <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
           <ReferentialConstraint>
@@ -93,15 +69,7 @@
           <EntitySet Name="OrderLine" EntityType="Self.OrderLine" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Orders" EntityType="Self.Orders" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Products" EntityType="Self.Products" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK__OrderLine__Order__49C3F6B7" Association="Self.FK__OrderLine__Order__49C3F6B7">
-            <End Role="Orders" EntitySet="Orders" />
-            <End Role="OrderLine" EntitySet="OrderLine" />
-          </AssociationSet>
-          <AssociationSet Name="FK__OrderLine__Produ__4AB81AF0" Association="Self.FK__OrderLine__Produ__4AB81AF0">
-            <End Role="Products" EntitySet="Products" />
-            <End Role="OrderLine" EntitySet="OrderLine" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Orders__Customer__398D8EEE" Association="Self.FK__Orders__Customer__398D8EEE">
+          <AssociationSet Name="FK__Orders__Customer__5070F446" Association="Self.FK__Orders__Customer__5070F446">
             <End Role="Customers" EntitySet="Customers" />
             <End Role="Orders" EntitySet="Orders" />
           </AssociationSet>
@@ -154,7 +122,7 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Price" Type="Decimal" Precision="30" Scale="0" Nullable="false" />
+          <Property Name="Price" Type="Decimal" Precision="18" Scale="3" />
           <Property Name="Url" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="OrderLines" Relationship="Self.FK__OrderLine__Produ__4316F928" FromRole="Products" ToRole="OrderLine" />
         </EntityType>
