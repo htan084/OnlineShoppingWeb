@@ -125,7 +125,10 @@ namespace OnlineShoppingWeb.Controllers
                 OrderNo = rad.Next(1,10000),
                 CustomerId = db.Customers.Single(x => x.UserName == userName).CustomerId,
                 OrderTime = DateTime.Now.Date,
-                Total = CaculateTotalPrice()
+                Total = CaculateTotalPrice(),
+                IsChecked =false,
+                IsReceived = false,
+                IsShipped = false
             };
             db.Orders.Add(order);
 

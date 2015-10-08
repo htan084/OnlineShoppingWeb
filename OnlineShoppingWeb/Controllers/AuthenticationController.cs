@@ -31,7 +31,8 @@ namespace OnlineShoppingWeb.Controllers
         public ActionResult Logout()
         {
             FormsAuthentication.SignOut();
-            return View("OnlineShoppingWeb/Views/Home/Index");
+            Session["Cart"] = null;
+            return Content("<script> alert('Thank you for shopping with us, you have successfully sign out!');window.location='/Home/Index'</script>");
         }
 
         [HttpPost]

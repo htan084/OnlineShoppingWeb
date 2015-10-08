@@ -4,6 +4,7 @@
 
     @Model.CompanyName &copy; @Model.Year 
     <button type="button" class="btn btn-primary" onclick="BackToHomePage()">Back to main page</button>
+    <button type="button" class="btn btn-primary" onclick="location.href='@Url.Action("Logout", "Authentication")'">Signout</button>
 </div>
 <script>
     function BackToHomePage() {

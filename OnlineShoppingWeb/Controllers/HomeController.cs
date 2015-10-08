@@ -88,6 +88,13 @@ namespace OnlineShoppingWeb.Controllers
             return RedirectToAction("MyAdmin");
         }
 
+        [HttpGet]
+        [AdminFilter]
+        public ActionResult AdminHomePage()
+        {
+            return View();
+        }
+
         [AdminFilter]
         public ActionResult MyAdmin()
         {

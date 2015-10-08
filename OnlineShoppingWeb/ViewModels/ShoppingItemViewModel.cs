@@ -21,6 +21,7 @@ namespace OnlineShoppingWeb.ViewModels
         }
 
         [Required]
+        [Range(1,100)]
         public int quantity{get;set;}
 
         public ShoppingItemViewModel()

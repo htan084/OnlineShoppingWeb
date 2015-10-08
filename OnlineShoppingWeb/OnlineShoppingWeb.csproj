@@ -264,6 +264,7 @@
     <Content Include="Views\Home\SaveCustomer.cshtml" />
     <Content Include="Views\ShoppingCart\ViewCart.cshtml" />
     <Content Include="Views\ShoppingCart\ShowTotalPrice.cshtml" />
+    <Content Include="Views\Home\AdminHomePage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

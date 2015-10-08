@@ -19,7 +19,7 @@
           <Property Name="Address" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="DateOfBirth" Type="datetime" />
         </EntityType>
-        <EntityType Name="OrderLine">
+        <EntityType Name="OrderLines">
           <Key>
             <PropertyRef Name="orderlineId" />
           </Key>
@@ -37,6 +37,9 @@
           <Property Name="OrderTime" Type="datetime" Nullable="false" />
           <Property Name="CustomerId" Type="int" />
           <Property Name="Total" Type="decimal" Precision="18" Scale="3" />
+          <Property Name="IsChecked" Type="bit" />
+          <Property Name="IsShipped" Type="bit" />
+          <Property Name="IsReceived" Type="bit" />
         </EntityType>
         <EntityType Name="Products">
           <Key>
@@ -47,6 +50,30 @@
           <Property Name="Url" Type="varchar" MaxLength="30" Nullable="false" />
           <Property Name="Price" Type="decimal" Precision="18" Scale="3" />
         </EntityType>
+        <Association Name="FK__OrderLine__Order__59063A47">
+          <End Role="Orders" Type="Self.Orders" Multiplicity="1" />
+          <End Role="OrderLines" Type="Self.OrderLines" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Orders">
+              <PropertyRef Name="OrderId" />
+            </Principal>
+            <Dependent Role="OrderLines">
+              <PropertyRef Name="OrderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__OrderLine__Produ__5812160E">
+          <End Role="Products" Type="Self.Products" Multiplicity="1" />
+          <End Role="OrderLines" Type="Self.OrderLines" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Products">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OrderLines">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__Orders__Customer__5070F446">
           <End Role="Customers" Type="Self.Customers" Multiplicity="0..1" />
           <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
@@ -66,9 +93,17 @@
         </Function>
         <EntityContainer Name="ModelsStoreContainer">
           <EntitySet Name="Customers" EntityType="Self.Customers" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="OrderLine" EntityType="Self.OrderLine" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OrderLines" EntityType="Self.OrderLines" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Orders" EntityType="Self.Orders" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Products" EntityType="Self.Products" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__OrderLine__Order__59063A47" Association="Self.FK__OrderLine__Order__59063A47">
+            <End Role="Orders" EntitySet="Orders" />
+            <End Role="OrderLines" EntitySet="OrderLines" />
+          </AssociationSet>
+          <AssociationSet Name="FK__OrderLine__Produ__5812160E" Association="Self.FK__OrderLine__Produ__5812160E">
+            <End Role="Products" EntitySet="Products" />
+            <End Role="OrderLines" EntitySet="OrderLines" />
+          </AssociationSet>
           <AssociationSet Name="FK__Orders__Customer__5070F446" Association="Self.FK__Orders__Customer__5070F446">
             <End Role="Customers" EntitySet="Customers" />
             <End Role="Orders" EntitySet="Orders" />
@@ -93,17 +128,6 @@
           <Property Name="DateOfBirth" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Orders" Relationship="Self.FK__Orders__Customer__398D8EEE" FromRole="Customers" ToRole="Orders" />
         </EntityType>
-        <EntityType Name="OrderLine">
-          <Key>
-            <PropertyRef Name="orderlineId" />
-          </Key>
-          <Property Name="OrderId" Type="Int32" Nullable="false" />
-          <Property Name="ProductId" Type="Int32" Nullable="false" />
-          <Property Name="orderlineId" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Order" Relationship="Self.FK__OrderLine__Order__4222D4EF" FromRole="OrderLine" ToRole="Orders" />
-          <NavigationProperty Name="Product" Relationship="Self.FK__OrderLine__Produ__4316F928" FromRole="OrderLine" ToRole="Products" />
-          <Property Name="Quantity" Type="Int32" />
-        </EntityType>
         <EntityType Name="Order">
           <Key>
             <PropertyRef Name="OrderId" />
@@ -114,7 +138,10 @@
           <Property Name="Total" Type="Int32" />
           <Property Name="CustomerId" Type="Int32" />
           <NavigationProperty Name="Customer" Relationship="Self.FK__Orders__Customer__398D8EEE" FromRole="Orders" ToRole="Customers" />
-          <NavigationProperty Name="OrderLines" Relationship="Self.FK__OrderLine__Order__4222D4EF" FromRole="Orders" ToRole="OrderLine" />
+          <Property Name="IsChecked" Type="Boolean" />
+          <Property Name="IsShipped" Type="Boolean" />
+          <Property Name="IsReceived" Type="Boolean" />
+          <NavigationProperty Name="OrderLines" Relationship="Models.FK__OrderLine__Order__59063A47" FromRole="Order" ToRole="OrderLine" />
         </EntityType>
         <EntityType Name="Product">
           <Key>
@@ -124,7 +151,7 @@
           <Property Name="Name" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Price" Type="Decimal" Precision="18" Scale="3" />
           <Property Name="Url" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="OrderLines" Relationship="Self.FK__OrderLine__Produ__4316F928" FromRole="Products" ToRole="OrderLine" />
+          <NavigationProperty Name="OrderLines" Relationship="Models.FK__OrderLine__Produ__5812160E" FromRole="Product" ToRole="OrderLine" />
         </EntityType>
         <Association Name="FK__Orders__Customer__398D8EEE">
           <End Role="Customers" Type="Self.Customer" Multiplicity="0..1" />
@@ -138,52 +165,28 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__OrderLine__Order__4222D4EF">
-          <End Role="Orders" Type="Self.Order" Multiplicity="1" />
-          <End Role="OrderLine" Type="Self.OrderLine" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Orders">
-              <PropertyRef Name="OrderId" />
-            </Principal>
-            <Dependent Role="OrderLine">
-              <PropertyRef Name="OrderId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__OrderLine__Produ__4316F928">
-          <End Role="Products" Type="Self.Product" Multiplicity="1" />
-          <End Role="OrderLine" Type="Self.OrderLine" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Products">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="OrderLine">
-              <PropertyRef Name="ProductId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityContainer Name="ZhenLiuOnlineDBContext" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Customers" EntityType="Self.Customer" />
-          <EntitySet Name="OrderLines" EntityType="Self.OrderLine" />
           <EntitySet Name="Orders" EntityType="Self.Order" />
           <EntitySet Name="Products" EntityType="Self.Product" />
           <AssociationSet Name="FK__Orders__Customer__398D8EEE" Association="Self.FK__Orders__Customer__398D8EEE">
             <End Role="Customers" EntitySet="Customers" />
             <End Role="Orders" EntitySet="Orders" />
           </AssociationSet>
-          <AssociationSet Name="FK__OrderLine__Order__4222D4EF" Association="Self.FK__OrderLine__Order__4222D4EF">
-            <End Role="Orders" EntitySet="Orders" />
-            <End Role="OrderLine" EntitySet="OrderLines" />
-          </AssociationSet>
-          <AssociationSet Name="FK__OrderLine__Produ__4316F928" Association="Self.FK__OrderLine__Produ__4316F928">
-            <End Role="Products" EntitySet="Products" />
-            <End Role="OrderLine" EntitySet="OrderLines" />
-          </AssociationSet>
           <FunctionImport Name="sp_ShowProductShoppingPage" ReturnType="Collection(Models.sp_ShowProductShoppingPage_Result)">
             <Parameter Name="totalRow" Mode="InOut" Type="Int32" />
             <Parameter Name="index" Mode="In" Type="Int32" />
             <Parameter Name="rowNumber" Mode="In" Type="Int32" />
           </FunctionImport>
+          <EntitySet Name="OrderLines" EntityType="Models.OrderLine" />
+          <AssociationSet Name="FK__OrderLine__Order__59063A47" Association="Models.FK__OrderLine__Order__59063A47">
+            <End Role="Order" EntitySet="Orders" />
+            <End Role="OrderLine" EntitySet="OrderLines" />
+          </AssociationSet>
+          <AssociationSet Name="FK__OrderLine__Produ__5812160E" Association="Models.FK__OrderLine__Produ__5812160E">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="OrderLine" EntitySet="OrderLines" />
+          </AssociationSet>
         </EntityContainer>
         <ComplexType Name="sp_ShowProductShoppingPage_Result">
           <Property Type="Int64" Name="rowNum" Nullable="true" />
@@ -192,6 +195,41 @@
           <Property Type="Decimal" Name="Price" Nullable="false" Precision="30" Scale="0" />
           <Property Type="String" Name="Url" Nullable="false" MaxLength="30" />
         </ComplexType>
+        <EntityType Name="OrderLine">
+          <Key>
+            <PropertyRef Name="orderlineId" />
+          </Key>
+          <Property Name="OrderId" Type="Int32" Nullable="false" />
+          <Property Name="Quantity" Type="Int32" />
+          <Property Name="ProductId" Type="Int32" Nullable="false" />
+          <Property Name="orderlineId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Order" Relationship="Models.FK__OrderLine__Order__59063A47" FromRole="OrderLine" ToRole="Order" />
+          <NavigationProperty Name="Product" Relationship="Models.FK__OrderLine__Produ__5812160E" FromRole="OrderLine" ToRole="Product" />
+        </EntityType>
+        <Association Name="FK__OrderLine__Order__59063A47">
+          <End Type="Models.Order" Role="Order" Multiplicity="1" />
+          <End Type="Models.OrderLine" Role="OrderLine" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Order">
+              <PropertyRef Name="OrderId" />
+            </Principal>
+            <Dependent Role="OrderLine">
+              <PropertyRef Name="OrderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__OrderLine__Produ__5812160E">
+          <End Type="Models.Product" Role="Product" Multiplicity="1" />
+          <End Type="Models.OrderLine" Role="OrderLine" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OrderLine">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -213,19 +251,12 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="OrderLines">
-            <EntityTypeMapping TypeName="Models.OrderLine">
-              <MappingFragment StoreEntitySet="OrderLine">
-                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
-                <ScalarProperty Name="OrderId" ColumnName="OrderId" />
-                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
-                <ScalarProperty Name="orderlineId" ColumnName="orderlineId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Orders">
             <EntityTypeMapping TypeName="Models.Order">
               <MappingFragment StoreEntitySet="Orders">
+                <ScalarProperty Name="IsReceived" ColumnName="IsReceived" />
+                <ScalarProperty Name="IsShipped" ColumnName="IsShipped" />
+                <ScalarProperty Name="IsChecked" ColumnName="IsChecked" />
                 <ScalarProperty Name="OrderId" ColumnName="OrderId" />
                 <ScalarProperty Name="OrderNo" ColumnName="OrderNo" />
                 <ScalarProperty Name="OrderTime" ColumnName="OrderTime" />
@@ -255,6 +286,16 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <EntitySetMapping Name="OrderLines">
+            <EntityTypeMapping TypeName="Models.OrderLine">
+              <MappingFragment StoreEntitySet="OrderLines">
+                <ScalarProperty Name="orderlineId" ColumnName="orderlineId" />
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="OrderId" ColumnName="OrderId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

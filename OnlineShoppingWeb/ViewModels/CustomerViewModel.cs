@@ -10,19 +10,20 @@ namespace OnlineShoppingWeb.ViewModels
     public class CustomerViewModel
     {
         public int CustomerID { get; set; }
-        [Required]
+        [Required(ErrorMessage = "First name not null", AllowEmptyStrings = false)]
+        [RegularExpression("^[a-zA-Z]*$", ErrorMessage = "string only")]
         public string FirstName { get; set; }
         [DisplayName("Last Name")]
         [Required(ErrorMessage = "last name not null", AllowEmptyStrings = false)]
         [RegularExpression("^[a-zA-Z]*$", ErrorMessage = "string only")]
         public string LastName { get; set; }
-        [Required]
         public string Mobile { get; set; }
         [Required]
         public string Address { get; set; }
         public string UserName { get; set; }
         public string UserPass { get; set; }
         [Required]
+        [EmailAddress]
         public string Email { get; set; }
         [Required]
         [DisplayFormat(DataFormatString="{0:d}")]
