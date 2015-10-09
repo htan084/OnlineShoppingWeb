@@ -28,7 +28,7 @@
                         @Html.DisplayFor(modelItem => item.quantity)
                     </td>
                     <td>@Html.Image(item.Product.Url, "width:40px;height:40px", "image does not exit")</td>
-                    <td><text>$</text>@(Convert.ToDouble(item.Product.Price) * item.quantity)</td>
+                    <td><text>$</text>@(Convert.ToDecimal(item.Product.Price) * item.quantity)</td>
                     <td>
                         @*@Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
                             @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |*@

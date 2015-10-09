@@ -122,7 +122,7 @@ namespace OnlineShoppingWeb.Controllers
             Random rad = new Random();
             Order order = new Order {
                 Customer = db.Customers.Single(x => x.UserName == userName),
-                OrderNo = rad.Next(1,10000),
+                OrderNo = rad.Next(1,1000000),
                 CustomerId = db.Customers.Single(x => x.UserName == userName).CustomerId,
                 OrderTime = DateTime.Now.Date,
                 Total = CaculateTotalPrice(),
@@ -149,15 +149,15 @@ namespace OnlineShoppingWeb.Controllers
             return  Content("<script> alert('Congratulations!your order has been sent to the seller');window.location='/Product/ShowProductShoppingPage'</script>");
         }
 
-        public double CaculateTotalPrice()
+        public decimal CaculateTotalPrice()
         {
-            double totalPrice = 0.0;
+            decimal totalPrice = 0;
             List<ShoppingItemViewModel> cart = (List<ShoppingItemViewModel>)Session["Cart"];
             if (cart != null)
             {
                 foreach (var item in cart)
                 {
-                    totalPrice += (Convert.ToDouble(item.Product.Price) * item.quantity);
+                    totalPrice += (Convert.ToDecimal(item.Product.Price) * item.quantity);
                 }
             }
             return totalPrice;
@@ -166,7 +166,7 @@ namespace OnlineShoppingWeb.Controllers
         [ChildActionOnly]
         public ActionResult ShowTotalPrice()
         {
-            double total = CaculateTotalPrice();
+            var total = CaculateTotalPrice();
             return View(total);
         }
         public ProductViewModel ConvertToViewModelFromProduct(Product product)

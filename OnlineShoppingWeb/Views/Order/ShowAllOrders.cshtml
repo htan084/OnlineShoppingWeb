@@ -1,0 +1,87 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+
+<div class="container">
+    <h2>All Orders</h2>
+    <table class="table">
+        <thead style="background-color:lightsalmon">
+            <tr>
+                <th>OrderId</th>
+                <th>OrderNo</th>
+                <th>OrderTime</th>
+                <th>CustomerName</th>
+                <th>IsChecked</th>
+                <th>IsShipped</th>
+                <th>IsReceived</th>
+            </tr>
+        </thead>
+        <tbody style="background-color: lightblue" id="bodyContent"></tbody>
+    </table>
+</div>
+@*<button id="newOrder">New Order</button>*@
+@section Scripts
+    {
+    <script>
+
+        (function() {
+
+            $(document).ready(function () {
+                // load orders using get
+                $.ajax({
+                    url: '/Order/GetAllOrders',
+                    method: "GET",
+                    data: null,      //{ 'Id': '13', 'CustomerName': 'JW' },
+                    dataType: "json",
+                }).done(function (data) {
+                    $.each(data, function (i,order) {
+                        $("#bodyContent").append(
+                            "<tr><td>" + order.OrderId +
+                            "</td><td>" + order.OrderNo +
+                            "</td><td>" + order.OrderTime +
+                            "</td><td>" + order.CustomerName +
+                            "</td><td>" + order.IsChecked +
+                            "</td><td>" + order.IsShipped +
+                            "</td><td>" + order.IsReceived +
+                            "</td></tr>");
+                    })
+                }).error(function (e) {
+                    alert(e);
+                });
+            });
+
+            //    //$("#newOrder").click(function () {
+            //    //    // save order using post
+            //    //    $.ajax({
+            //    //        url: '/Order/SaveOrder',
+            //    //        method: "POST",
+            //    //        data:{ 'Id': '13', 'CustomerName': 'JW' },
+
+            //    //    }).done(function (data) {
+
+            //    //    }).error(function (e) {
+            //    //        alert(e);
+            //    //    });
+
+            //    $.post('/Order/SaveOrder', { 'Id': '13', 'CustomerName': 'JW' }).done(
+            //        function (data) {
+            //            alert(data);
+            //        }
+            //        ).fail(function (error) {
+            //            alert(error);
+            //        });
+            //});
+        })()
+
+    </script>
+    }
+
+
+
+
+
+
+
+
+
+

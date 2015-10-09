@@ -131,6 +131,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AuthenticationController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\OrderController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Controllers\ShoppingCartController.cs" />
     <Compile Include="CustomHtmlHelper\HtmlImageHelper.cs" />
@@ -143,6 +144,7 @@
     <Compile Include="ViewModels\CustomerViewModelList.cs" />
     <Compile Include="ViewModels\FileUploadViewModel.cs" />
     <Compile Include="ViewModels\FooterViewModel.cs" />
+    <Compile Include="ViewModels\OrderViewModel.cs" />
     <Compile Include="ViewModels\PageModel.cs" />
     <Compile Include="ViewModels\ProductViewModel.cs" />
     <Compile Include="ViewModels\ProductViewModelList.cs" />
@@ -265,6 +267,7 @@
     <Content Include="Views\ShoppingCart\ViewCart.cshtml" />
     <Content Include="Views\ShoppingCart\ShowTotalPrice.cshtml" />
     <Content Include="Views\Home\AdminHomePage.cshtml" />
+    <Content Include="Views\Order\ShowAllOrders.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
