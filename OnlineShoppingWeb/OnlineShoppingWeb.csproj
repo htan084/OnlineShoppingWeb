@@ -267,7 +267,9 @@
     <Content Include="Views\ShoppingCart\ViewCart.cshtml" />
     <Content Include="Views\ShoppingCart\ShowTotalPrice.cshtml" />
     <Content Include="Views\Home\AdminHomePage.cshtml" />
-    <Content Include="Views\Order\ShowAllOrders.cshtml" />
+    <Content Include="Views\Order\ShowAllOrdersBackUp.cshtml" />
+    <Content Include="Views\Shared\_Orders.cshtml" />
+    <Content Include="Views\Order\ShowMyOrders.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

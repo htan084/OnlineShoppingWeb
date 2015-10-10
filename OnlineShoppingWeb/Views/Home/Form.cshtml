@@ -32,6 +32,11 @@
                 @Html.ValidationMessageFor(o => o.UserPass)
             </div>
             <div class="form-group">
+                <label for="ConfirmUserPass">ConfirmUserPass</label>
+                <input type="password" class="form-control" id="pwdConfirm" placeholder="Enter password again" name="ConfirmUserPass" style="background-color:lightblue" value=@Model.ConfirmUserPass>
+                @Html.ValidationMessageFor(o => o.ConfirmUserPass)
+            </div>
+            <div class="form-group">
                 <label for="mobile">Mobile:</label>
                 <input type="text" class="form-control" id="mobile" placeholder="Enter your mobile number" name="Mobile" style="background-color:lightblue" value=@Model.Mobile>
                 @Html.ValidationMessageFor(o => o.Mobile)
@@ -40,6 +45,11 @@
                 <label for="Email">Email:</label>
                 <input type="text" class="form-control" id="email" placeholder="Enter email" name="Email" style="background-color:lightblue" value=@Model.Email>
                 @Html.ValidationMessageFor(o => o.Email)
+            </div>
+            <div class="form-group">
+                <label for="ConfirmEmailAddress">ConfirmEmailAddress:</label>
+                <input type="text" class="form-control" id="ConfirmEmailAddress" placeholder="Confirm email" name="ConfirmEmailAddress" style="background-color:lightblue" value=@Model.ConfirmEmailAddress>
+                @Html.ValidationMessageFor(o => o.ConfirmEmailAddress)
             </div>
             <div class="form-group">
                 <label for="address">Address:</label>

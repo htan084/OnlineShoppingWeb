@@ -133,7 +133,7 @@ namespace OnlineShoppingWeb.Controllers
         {
             var customer = service.GetCustomerById(customerID);
             var customerViewModel = ConvertToViewModelFromCustomer(customer);
-            TryUpdateModel(customerViewModel, new string[] { "FirstName", "LastName","Email", "Address", "Mobile" ,"DateOfBirth"});
+            TryUpdateModel(customerViewModel, new string[] { "FirstName", "LastName", "Email", "ConfirmEmailAddress", "Address", "Mobile", "DateOfBirth" });
             if (ModelState.IsValid)
             {
                 var modiefiedCustomer = ConvertToCustomerFromViewModel(customerViewModel);
@@ -156,8 +156,10 @@ namespace OnlineShoppingWeb.Controllers
             customerViewModel.LastName = customer.LastName;
             customerViewModel.Mobile = customer.Mobile;
             customerViewModel.UserPass = customer.UserPass;
+            customerViewModel.ConfirmUserPass = customer.UserPass;
             customerViewModel.UserName = customer.UserName;
             customerViewModel.Email = customer.Email;
+            customerViewModel.ConfirmEmailAddress = customer.Email;
             customerViewModel.DateOfBirth = customer.DateOfBirth;
             return customerViewModel;
         }

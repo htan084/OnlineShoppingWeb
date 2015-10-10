@@ -66,7 +66,13 @@
                     @Html.TextBoxFor(model => model.Email, new { @class = "form-control", id = "email", placeholder = "Enter your email", name = "Email", style = "background-color:lightblue" })
                     @Html.ValidationMessageFor(model => model.Email)
                 </div>
-
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.ConfirmEmailAddress)
+                </div>
+                <div class="editor-field">
+                    @Html.TextBoxFor(model => model.ConfirmEmailAddress, new { @class = "form-control", id = "confirmEmailAddress", placeholder = "Re-enter your email", name = "ConfirmEmailAddress", style = "background-color:lightblue" })
+                    @Html.ValidationMessageFor(model => model.ConfirmEmailAddress)
+                </div>
                 <p>
                     <input type="submit" value="Save" />
                 </p>

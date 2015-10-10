@@ -1,0 +1,60 @@
+﻿@{
+    ViewBag.Title = "My orders";
+}
+<div class="container">
+    <div class="dropdown">
+        <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+            Select orders
+            <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu">
+            <li>
+                @Ajax.ActionLink("View All Orders", "GetAllOrders", new AjaxOptions
+           {
+               HttpMethod = "GET",
+               UpdateTargetId = "AllOrders",
+               InsertionMode = InsertionMode.Replace
+           })
+            </li>
+            <li>
+                @Ajax.ActionLink("View UnChecked Orders", "GetUnCheckedOrders", new AjaxOptions
+           {
+               HttpMethod = "GET",
+               UpdateTargetId = "AllOrders",
+               InsertionMode = InsertionMode.Replace
+           })
+            </li>
+            <li>
+                @Ajax.ActionLink("View Orders wait for shipping", "GetCheckedOrders", new AjaxOptions
+           {
+               HttpMethod = "GET",
+               UpdateTargetId = "AllOrders",
+               InsertionMode = InsertionMode.Replace
+           })
+            </li>
+            <li>
+                @Ajax.ActionLink("View orders in shipping", "GetOrdersInShipping", new AjaxOptions
+           {
+               HttpMethod = "GET",
+               UpdateTargetId = "AllOrders",
+               InsertionMode = InsertionMode.Replace
+           })
+            </li>
+            <li>
+                @Ajax.ActionLink("View arrived orders", "GetReceivedOrders", new AjaxOptions
+           {
+               HttpMethod = "GET",
+               UpdateTargetId = "AllOrders",
+               InsertionMode = InsertionMode.Replace
+           })
+            </li>
+        </ul>
+    </div>
+
+
+
+
+
+    <div id="AllOrders">
+    </div>
+</div>

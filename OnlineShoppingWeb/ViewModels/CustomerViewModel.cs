@@ -22,9 +22,13 @@ namespace OnlineShoppingWeb.ViewModels
         public string Address { get; set; }
         public string UserName { get; set; }
         public string UserPass { get; set; }
+        [Compare("UserPass")]
+        public string ConfirmUserPass { get; set; }
         [Required]
         [EmailAddress]
         public string Email { get; set; }
+        [Compare("Email")]
+        public string ConfirmEmailAddress { get; set; }
         [Required]
         [DisplayFormat(DataFormatString="{0:d}")]
         public DateTime? DateOfBirth { get; set; }

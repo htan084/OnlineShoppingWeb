@@ -191,7 +191,7 @@ namespace OnlineShoppingWeb.Controllers
             var product = new Product { 
                 Id = productViewModel.Id,
                 Name = productViewModel.Name,
-                Price = Convert.ToInt32(productViewModel.Price),
+                Price = Convert.ToDecimal(productViewModel.Price),
                 Url = productViewModel.Url
             };
             return product;
