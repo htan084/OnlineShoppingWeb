@@ -1,0 +1,32 @@
+﻿@model OnlineShoppingWeb.ViewModels.OrderViewModel
+<tr>
+<td>
+    @Html.DisplayFor(modelItem => modelItem.OrderId)
+    @Html.HiddenFor(modelItem => modelItem.OrderId)
+</td>
+<td>
+    @Html.DisplayFor(modelItem => modelItem.OrderNo)
+    @Html.HiddenFor(modelItem => modelItem.OrderNo)
+</td>
+<td>
+    @Html.DisplayFor(modelItem => modelItem.OrderTime)
+    @Html.HiddenFor(modelItem => modelItem.OrderTime)
+</td>
+<td>
+    @Html.DisplayFor(modelItem => modelItem.Total)
+    @Html.HiddenFor(modelItem => modelItem.Total)
+</td>
+<td>
+    @Html.DisplayFor(modelItem => modelItem.CustomerName)
+    @Html.HiddenFor(modelItem => modelItem.CustomerName)
+</td>
+<td>
+    @Html.CheckBoxFor(modelItem => modelItem.IsChecked)
+</td>
+<td>
+    @Html.CheckBoxFor(modelItem => modelItem.IsShipped)
+</td>
+<td>
+    @Html.CheckBoxFor(modelItem => modelItem.IsReceived)
+</td>
+</tr>

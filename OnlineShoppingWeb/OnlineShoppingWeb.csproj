@@ -270,6 +270,7 @@
     <Content Include="Views\Order\ShowAllOrdersBackUp.cshtml" />
     <Content Include="Views\Shared\_Orders.cshtml" />
     <Content Include="Views\Order\ShowMyOrders.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\OrderViewModel.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

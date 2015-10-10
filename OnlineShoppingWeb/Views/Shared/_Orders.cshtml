@@ -1,75 +1,51 @@
 ﻿@model IEnumerable<OnlineShoppingWeb.ViewModels.OrderViewModel>
 
+@using (Ajax.BeginForm("SaveChanges", "Order", new AjaxOptions { 
+                                                HttpMethod = "POST",
+                                                OnSuccess = "OnSuccess",
+                                                OnFailure = "OnFailure"
+}))
+{
+    <table class="table">
+        <thead style="background-color:lightsalmon">
 
-<table class="table">
-    <thead style="background-color:lightsalmon">
-
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.OrderId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.OrderNo)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.OrderTime)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Total)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CustomerName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IsChecked)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IsShipped)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IsReceived)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody style="background-color: lightblue" id="bodyContent">
-        @foreach (var item in Model)
-        {
-            using(Html.BeginForm("SaveChanges", "Order",new { id = item.OrderId }))
-            {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.OrderId)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.OrderNo)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.OrderTime)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Total)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.CustomerName)
-                    </td>
-                    <td>
-                        @Html.CheckBoxFor(modelItem => item.IsChecked.Value)
-                    </td>
-                    <td>
-                        @Html.CheckBoxFor(modelItem => item.IsShipped.Value)
-                    </td>
-                    <td>
-                        @Html.CheckBoxFor(modelItem => item.IsReceived.Value)
-                    </td>
-                    <td>
-                        <input type="submit" value="SaveChanges"/>
-                    </td>
-                </tr>
-            }
-        }
-    </tbody>
-</table>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.OrderId)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.OrderNo)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.OrderTime)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Total)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CustomerName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.IsChecked)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.IsShipped)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.IsReceived)
+                </th>
+            </tr>
+        </thead>
+        <tbody style="background-color: lightblue" id="bodyContent">
+            @Html.EditorForModel()
+            <tr>
+                <td colspan="9">
+                    <input type="submit" value="SaveChanges" />
+                </td>
+            </tr>
+        </tbody>
+    </table>
+}
 <script type="text/javascript">
 
     function OnSuccess(response) {

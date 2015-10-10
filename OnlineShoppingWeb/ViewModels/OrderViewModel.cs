@@ -15,8 +15,8 @@ namespace OnlineShoppingWeb.ViewModels
         public System.DateTime OrderTime { get; set; }
         public  string Total { get; set; }
         public string CustomerName { get; set; }
-        public Nullable<bool> IsChecked { get; set; }
-        public Nullable<bool> IsShipped { get; set; }
-        public Nullable<bool> IsReceived { get; set; }
+        public bool IsChecked { get; set; }
+        public bool IsShipped { get; set; }
+        public bool IsReceived { get; set; }
     }
 }
