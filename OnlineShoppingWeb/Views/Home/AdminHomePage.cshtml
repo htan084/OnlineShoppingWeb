@@ -6,19 +6,63 @@
 <div class="container">
     <h2>Manage my customer orders</h2>
     <ul class="list-group">
-        <li class="list-group-item list-group-item-success"><span class="badge">12</span>New Orders</li>
-        <li class="list-group-item list-group-item-warning"><span class="badge">12</span>Viewed Orders</li>
-        <li class="list-group-item list-group-item-danger"><span class="badge">12</span>Orders in shipping</li>
-        <li class="list-group-item list-group-item-info"><span class="badge">12</span>Shipped Orders</li>
-        <li class="list-group-item list-group-item-success"><span class="badge">12</span>@Html.ActionLink("All Orders", "ShowMyOrders", "Order")</li>
+        <li class="list-group-item list-group-item-success"><span id="newOrderNumber" class="badge"></span>New Orders</li>
+        <li class="list-group-item list-group-item-warning"><span id="checkedOrderNumber" class="badge"></span>Viewed Orders</li>
+        <li class="list-group-item list-group-item-danger"><span id="ordersInShippingNumber" class="badge"></span>Orders in shipping</li>
+        <li class="list-group-item list-group-item-info"><span class="badge"></span>Shipped Orders</li>
+        <li class="list-group-item list-group-item-success"><span  class="badge"></span>@Html.ActionLink("Go to my orders", "ShowMyOrders", "Order")</li>
     </ul>
     <h2>Manage my products and customers</h2>
     <div class="list-group">
-        <a href="#" class="list-group-item list-group-item-success"><span class="badge">12</span>New Products</a>
+        <a href="#" class="list-group-item list-group-item-success"><span class="badge"></span>New Products</a>
         <a href="#" class="list-group-item list-group-item-info">Special Products</a>
         <a href="#" class="list-group-item list-group-item-danger">Deleted Products</a>
         <a href="~/Product/ProductManage" class="list-group-item list-group-item-warning">All Products</a>
         <a href="~/Home/MyAdmin" class="list-group-item list-group-item-success">All Customers</a>
-
     </div>
 </div>
+
+@section Scripts
+    {
+    <script>
+
+        (function() {
+
+            $(document).ready(function () {
+                $.ajax({
+                    url: '/Order/GetCountOfNewOrders',
+                    method: "GET",
+                    data: null, 
+                    dataType: "json",
+                }).done(function (data) {
+                    $("#newOrderNumber").append(data);
+                }).error(function (e) {
+                    alert(e);
+                });
+
+                $.ajax({
+                    url: '/Order/GetCountOfCheckedOrders',
+                    method: "GET",
+                    data: null,
+                    dataType: "json",
+                }).done(function (data) {
+                    $("#checkedOrderNumber").append(data);
+                }).error(function (e) {
+                    alert(e);
+                });
+
+                $.ajax({
+                    url: '/Order/GetCountOfOrdersInShipping',
+                    method: "GET",
+                    data: null,
+                    dataType: "json",
+                }).done(function (data) {
+                    $("#ordersInShippingNumber").append(data);
+                }).error(function (e) {
+                    alert(e);
+                });
+            });
+        })()
+
+    </script>
+}

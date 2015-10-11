@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BusinessLayer;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -18,5 +19,7 @@ namespace OnlineShoppingWeb.ViewModels
         public bool IsChecked { get; set; }
         public bool IsShipped { get; set; }
         public bool IsReceived { get; set; }
+        public virtual ICollection<OrderLine> OrderLines { get; set; }
+
     }
 }

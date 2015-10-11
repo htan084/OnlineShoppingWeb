@@ -1,5 +1,41 @@
 ﻿@model IEnumerable<OnlineShoppingWeb.ViewModels.ProductViewModel>
 <h2>Welcome @User.Identity.Name!</h2>
+<div class="container" style="right:auto">
+    
+    <div class="btn-group">
+        <div class="btn-group">
+            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                Profile <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" role="menu">
+                <li>@Html.ActionLink("Edit my details", "getDetailsByCustomer", "Home",new{userName =@User.Identity.Name },null)</li>
+                @*<li><a href="#">Smartphone</a></li>*@
+            </ul>
+        </div>
+        <div class="btn-group">
+            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                My Message <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" role="menu">
+                <li><a href="#">Read Message</a></li>
+                <li><a href="#">Send a message</a></li>
+            </ul>
+        </div>
+        <div class="btn-group">
+            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                My Orders <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" role="menu">
+                <li><a href="#">Order History</a></li>
+                @*<li><a href="#">Smartphone</a></li>*@
+            </ul>
+        </div>
+    </div>
+</div>
+
+
+
+
 
 
 <div class="container">
@@ -50,7 +86,7 @@
                                 @Html.Image(@item.Url, "width:40px;height:40px", "image does not exit")
                             </td>
                             <td><input type="text" name="Quantity" /> 
-                                <input type="submit" value="Add to chart" class="btn btn-success" /> </td>
+                                <input type="submit" value="Add to cart" class="btn btn-success" /> </td>
                         </tr>
                     }
                 }

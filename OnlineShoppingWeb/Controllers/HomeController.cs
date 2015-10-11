@@ -15,9 +15,10 @@ namespace OnlineShoppingWeb.Controllers
     public class HomeController : Controller
     {
         private CustomerService service;
+        private ZhenLiuOnlineDBContext db = new ZhenLiuOnlineDBContext();
         public HomeController()
         {
-           this.service = new CustomerService();
+            this.service = new CustomerService();
         }
         [AllowAnonymous]
         public ActionResult Index()
@@ -48,10 +49,11 @@ namespace OnlineShoppingWeb.Controllers
                     UserService _userService = new UserService();
                     string userName = customerViewModel.UserName;
 
-                    if ((string.IsNullOrEmpty(customerViewModel.UserName)) || customerViewModel.UserName.Length < 5 || customerViewModel.UserName.Length>9)
+                    if ((string.IsNullOrEmpty(customerViewModel.UserName)) || customerViewModel.UserName.Length < 5 || customerViewModel.UserName.Length > 9)
                     {
                         ModelState.AddModelError("UserName", "UserName needs to between 5 to 9 characters");
-                    } else if (_userService.IsUserNameOccupied(userName))
+                    }
+                    else if (_userService.IsUserNameOccupied(userName))
                     {
                         ModelState.AddModelError("UserName", "This user name has already been used");
                     }
@@ -59,8 +61,8 @@ namespace OnlineShoppingWeb.Controllers
                     {
                         ModelState.AddModelError("UserPass", "Password needs to between 5 to 9 characters");
                     }
-                   
-                 
+
+
                     if (ModelState.IsValid)
                     {
                         var customer = ConvertToCustomerFromViewModel(customerViewModel);
@@ -142,9 +144,17 @@ namespace OnlineShoppingWeb.Controllers
             }
             else
             {
-                
+
                 return View();
             }
+        }
+
+        [HttpGet]
+        public ActionResult getDetailsByCustomer(string userName)
+        {
+            var customer = db.Customers.Single(x => x.UserName == userName);
+            var customerViewModel = ConvertToViewModelFromCustomer(customer);
+            return View(customerViewModel);
         }
 
         public CustomerViewModel ConvertToViewModelFromCustomer(Customer customer)
@@ -166,7 +176,8 @@ namespace OnlineShoppingWeb.Controllers
 
         public Customer ConvertToCustomerFromViewModel(CustomerViewModel customerViewModel)
         {
-            Customer customer = new Customer { 
+            Customer customer = new Customer
+            {
                 Address = customerViewModel.Address,
                 CustomerId = customerViewModel.CustomerID,
                 Email = customerViewModel.Email,

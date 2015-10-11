@@ -1,0 +1,97 @@
+﻿@model OnlineShoppingWeb.ViewModels.CustomerViewModel
+
+<div class="container">
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true)
+
+        <fieldset>
+            <legend>Edit your customer's details</legend>
+
+            <div class="editor-field">
+                @Html.HiddenFor(model => model.CustomerID)
+            </div>
+            <div class="editor-label">
+                @Html.LabelFor(model => model.UserPass)
+            </div>
+            <div class="editor-field">
+                @Html.TextBoxFor(model => model.UserPass, new { @class = "form-control", id = "userPass", placeholder = "Enter your passworde", name = "UserPass", style = "background-color:lightblue" })
+                @Html.ValidationMessageFor(model => model.UserPass)
+            </div>
+            <div class="editor-label">
+                @Html.LabelFor(model => model.ConfirmUserPass)
+            </div>
+            <div class="editor-field">
+                @Html.TextBoxFor(model => model.ConfirmUserPass, new { @class = "form-control", id = "confirmUserPass", placeholder = "Re-enter your passworde", name = "ConfirmUserPass", style = "background-color:lightblue" })
+                @Html.ValidationMessageFor(model => model.ConfirmUserPass)
+            </div>
+            <div class="editor-label">
+                @Html.LabelFor(model => model.FirstName)
+            </div>
+            <div class="editor-field">
+                @Html.TextBoxFor(model => model.FirstName, new { @class = "form-control", id = "firstName", placeholder = "Enter your first name", name = "FirstName", style = "background-color:lightblue" })
+                @Html.ValidationMessageFor(model => model.FirstName)
+            </div>
+
+            <div class="editor-label">
+                @Html.LabelFor(model => model.LastName)
+            </div>
+            <div class="editor-field">
+                @Html.TextBoxFor(model => model.LastName, new { @class = "form-control", id = "lastName", placeholder = "Enter your last name", name = "LastName", style = "background-color:lightblue" })
+                @Html.ValidationMessageFor(model => model.LastName)
+            </div>
+
+            <div class="editor-label">
+                @Html.LabelFor(model => model.DateOfBirth)
+            </div>
+            <div class="editor-field">
+                @Html.TextBoxFor(model => model.DateOfBirth, new { @class = "form-control", id = "dateOfBirth", placeholder = "Select your date of birth", name = "DateOfBirth", style = "background-color:lightblue" })
+                @Html.ValidationMessageFor(model => model.DateOfBirth)
+            </div>
+
+            <div class="editor-label">
+                @Html.LabelFor(model => model.Mobile)
+            </div>
+            <div class="editor-field">
+                @Html.TextBoxFor(model => model.Mobile, new { @class = "form-control", id = "mobile", placeholder = "Enter your mobile number", name = "MobileNumber", style = "background-color:lightblue" })
+                @Html.ValidationMessageFor(model => model.Mobile)
+            </div>
+
+            <div class="editor-label">
+                @Html.LabelFor(model => model.Address)
+            </div>
+            <div class="editor-field">
+                @Html.TextBoxFor(model => model.Address, new { @class = "form-control", id = "address", placeholder = "Enter your address", name = "Address", style = "background-color:lightblue" })
+                @Html.ValidationMessageFor(model => model.Address)
+            </div>
+
+            <div class="editor-field">
+                @Html.HiddenFor(model => model.UserName)
+            </div>
+
+
+            <div class="editor-label">
+                @Html.LabelFor(model => model.Email)
+            </div>
+            <div class="editor-field">
+                @Html.TextBoxFor(model => model.Email, new { @class = "form-control", id = "email", placeholder = "Enter your email", name = "Email", style = "background-color:lightblue" })
+                @Html.ValidationMessageFor(model => model.Email)
+            </div>
+            <div class="editor-label">
+                @Html.LabelFor(model => model.ConfirmEmailAddress)
+            </div>
+            <div class="editor-field">
+                @Html.TextBoxFor(model => model.ConfirmEmailAddress, new { @class = "form-control", id = "confirmEmailAddress", placeholder = "Re-enter your email", name = "ConfirmEmailAddress", style = "background-color:lightblue" })
+                @Html.ValidationMessageFor(model => model.ConfirmEmailAddress)
+            </div>
+            <p>
+                <input type="submit" value="Save" />
+            </p>
+        </fieldset>
+    }
+
+    <div>
+        @Html.ActionLink("Back to List", "Index")
+    </div>
+</div>
