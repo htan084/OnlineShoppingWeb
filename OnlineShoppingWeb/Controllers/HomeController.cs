@@ -157,6 +157,29 @@ namespace OnlineShoppingWeb.Controllers
             return View(customerViewModel);
         }
 
+        public string saveDetailsByCustomer(int customerID)
+        {
+            var customer = service.GetCustomerById(customerID);
+            var customerViewModel = ConvertToViewModelFromCustomer(customer);
+            TryUpdateModel(customerViewModel, new string[] { "FirstName", "LastName", "UserPass", "ConfirmUserPass", "Email", "ConfirmEmailAddress", "Address", "Mobile", "DateOfBirth" });
+            if ((string.IsNullOrEmpty(customerViewModel.UserPass)) || customerViewModel.UserPass.Length < 5 || customerViewModel.UserPass.Length > 9)
+            {
+                ModelState.AddModelError("UserPass", "Password needs to between 5 to 9 characters");
+            }
+
+            if (ModelState.IsValid)
+            {
+                var modiefiedCustomer = ConvertToCustomerFromViewModel(customerViewModel);
+                service.UpdateCustomer(modiefiedCustomer);
+                return "valid";
+            }
+            else
+            {
+
+                return "invalid";
+            }
+        } 
+
         public CustomerViewModel ConvertToViewModelFromCustomer(Customer customer)
         {
             var customerViewModel = new CustomerViewModel();

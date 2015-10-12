@@ -26,7 +26,7 @@
                 My Orders <span class="caret"></span>
             </button>
             <ul class="dropdown-menu" role="menu">
-                <li><a href="#">Order History</a></li>
+                <li>@Html.ActionLink("View order history", "ViewOrderHistoryByCustomer", "Order", new { userName = @User.Identity.Name }, null)</li>
                 @*<li><a href="#">Smartphone</a></li>*@
             </ul>
         </div>

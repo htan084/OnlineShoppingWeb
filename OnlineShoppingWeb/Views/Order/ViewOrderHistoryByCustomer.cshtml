@@ -1,0 +1,121 @@
+﻿@model IEnumerable<OnlineShoppingWeb.ViewModels.OrderViewModel>
+
+@{
+    ViewBag.Title = "ViewOrderHistoryByCustomer";
+}
+<div class="container">
+<table class="table">
+    <thead style="background-color:lightsalmon">
+
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.OrderNo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.OrderTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Total)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CustomerName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsChecked)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsShipped)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsReceived)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody style="background-color: lightblue" id="bodyContent">
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OrderNo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OrderTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Total)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CustomerName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IsChecked)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IsShipped)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IsReceived)
+                </td>
+                <td>
+                    <!-- Trigger the modal with a button -->
+                    <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">View details</button>
+
+                    <!-- Modal -->
+                    <div id="myModal" class="modal fade" role="dialog">
+                        <div class="modal-dialog">
+
+                            <!-- Modal content-->
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <h4 class="modal-title">Details for orderNo @item.OrderNo</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>
+                                                    Product Name
+                                                </th>
+                                                <th>
+                                                    Product Price
+                                                </th>
+                                                <th>
+                                                    Product Quantity
+                                                </th>
+                                                <th>Total</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var orderLine in item.OrderLines)
+                                            {
+                                                <tr>
+                                                    <td>@orderLine.Product.Name</td>
+                                                    <td>$@orderLine.Product.Price</td>
+                                                    <td>@orderLine.Quantity</td>
+                                                    <td>$@(orderLine.Product.Price * orderLine.Quantity) </td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        }
+
+    </tbody>
+</table>
+    <div>
+        @Html.ActionLink("Back to ShoppingList", "ShowProductShoppingPage", "Product")
+    </div>
+</div>
+

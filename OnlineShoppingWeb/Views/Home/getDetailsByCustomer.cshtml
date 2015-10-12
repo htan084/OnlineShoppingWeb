@@ -1,7 +1,11 @@
 ﻿@model OnlineShoppingWeb.ViewModels.CustomerViewModel
 
 <div class="container">
-    @using (Html.BeginForm())
+    @using (Ajax.BeginForm("saveDetailsByCustomer", "Home", new { customerID = Model.CustomerID }, new AjaxOptions { 
+                                                            HttpMethod = "POST",
+                                                            OnSuccess = "OnSuccess",
+                                                            OnFailure = "OnFailure"   
+    }))
     {
         @Html.AntiForgeryToken()
         @Html.ValidationSummary(true)
@@ -92,6 +96,22 @@
     }
 
     <div>
-        @Html.ActionLink("Back to List", "Index")
+        @Html.ActionLink("Back to ShoppingList", "ShowProductShoppingPage", "Product")
     </div>
 </div>
+
+<script>
+    function OnSuccess(response) {
+        if (response == "valid") {
+            alert("your details has been saved");
+            window.location = "/Product/ShowProductShoppingPage"
+        } else {
+            alert("please enter  valid data");
+        }
+    }
+
+    function OnFailure(response) {
+        alert("Whoops! That didn't go so well did it?");
+    }
+
+</script>
