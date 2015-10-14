@@ -23,6 +23,8 @@ namespace BusinessLayer
         public string Name { get; set; }
         public Nullable<decimal> Price { get; set; }
         public string Url { get; set; }
+        public Nullable<bool> OnSpecial { get; set; }
+        public Nullable<bool> OutOfStock { get; set; }
     
         public virtual ICollection<OrderLine> OrderLines { get; set; }
     }

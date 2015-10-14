@@ -62,9 +62,10 @@ namespace OnlineShoppingWeb.Controllers
         [AdminFilter]
         public ActionResult Upload(FileUploadViewModel fileUpload)
         {
-          
+            string name = fileUpload.FileToUpload.FileName;
+            string imageType = name.Substring(name.LastIndexOf('.'));
             int productId = Convert.ToInt32(Request["ProductId"]);
-            string url = productId + ".jpg";
+            string url = productId + imageType;
             fileUpload.FileToUpload.SaveAs(@"D:\MyWifeWeb\OnlineShoppingWeb\OnlineShoppingWeb\Image\" + url);
             var product = service.GetProducts().Single(x => x.Id == productId);
             product.Url = url;

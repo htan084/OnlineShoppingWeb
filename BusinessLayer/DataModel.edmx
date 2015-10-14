@@ -49,6 +49,8 @@
           <Property Name="Name" Type="nvarchar" MaxLength="30" Nullable="false" />
           <Property Name="Url" Type="varchar" MaxLength="30" Nullable="false" />
           <Property Name="Price" Type="decimal" Precision="18" Scale="3" />
+          <Property Name="OnSpecial" Type="bit" />
+          <Property Name="OutOfStock" Type="bit" />
         </EntityType>
         <Association Name="FK__OrderLine__Order__59063A47">
           <End Role="Orders" Type="Self.Orders" Multiplicity="1" />
@@ -152,6 +154,8 @@
           <Property Name="Price" Type="Decimal" Precision="18" Scale="3" />
           <Property Name="Url" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="OrderLines" Relationship="Models.FK__OrderLine__Produ__5812160E" FromRole="Product" ToRole="OrderLine" />
+          <Property Name="OnSpecial" Type="Boolean" />
+          <Property Name="OutOfStock" Type="Boolean" />
         </EntityType>
         <Association Name="FK__Orders__Customer__398D8EEE">
           <End Role="Customers" Type="Self.Customer" Multiplicity="0..1" />
@@ -268,6 +272,8 @@
           <EntitySetMapping Name="Products">
             <EntityTypeMapping TypeName="Models.Product">
               <MappingFragment StoreEntitySet="Products">
+                <ScalarProperty Name="OutOfStock" ColumnName="OutOfStock" />
+                <ScalarProperty Name="OnSpecial" ColumnName="OnSpecial" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Price" ColumnName="Price" />

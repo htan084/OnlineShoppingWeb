@@ -15,5 +15,7 @@ namespace OnlineShoppingWeb.ViewModels
         public string Price { get; set; }
         [Display(Name = "Image")]
         public string Url { get; set; }
+        public bool OnSpecial { get; set; }
+        public bool OutOfStock { get; set; }
     }
 }

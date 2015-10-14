@@ -60,6 +60,16 @@ namespace OnlineShoppingWeb.Business
                 paramUrl.Value = product.Url;
                 cmd.Parameters.Add(paramUrl);
 
+                SqlParameter paramOnSpecial = new SqlParameter();
+                paramOnSpecial.ParameterName = "@OnSpecial";
+                paramOnSpecial.Value = product.OnSpecial;
+                cmd.Parameters.Add(paramOnSpecial);
+
+                SqlParameter paramOutOfStock = new SqlParameter();
+                paramOutOfStock.ParameterName = "@OutOfStock";
+                paramOutOfStock.Value = product.OutOfStock;
+                cmd.Parameters.Add(paramOutOfStock);
+
                 conn.Open();
                 cmd.ExecuteNonQuery();
             }
@@ -86,6 +96,16 @@ namespace OnlineShoppingWeb.Business
                 paramUrl.ParameterName = "@Url";
                 paramUrl.Value = product.Url;
                 cmd.Parameters.Add(paramUrl);
+
+                SqlParameter paramOnSpecial = new SqlParameter();
+                paramOnSpecial.ParameterName = "@OnSpecial";
+                paramOnSpecial.Value = product.OnSpecial;
+                cmd.Parameters.Add(paramOnSpecial);
+
+                SqlParameter paramOutOfStock = new SqlParameter();
+                paramOutOfStock.ParameterName = "@OutOfStock";
+                paramOutOfStock.Value = product.OutOfStock;
+                cmd.Parameters.Add(paramOutOfStock);
 
                 conn.Open();
                 cmd.ExecuteNonQuery();
