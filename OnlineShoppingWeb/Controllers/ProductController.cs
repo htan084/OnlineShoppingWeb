@@ -137,6 +137,13 @@ namespace OnlineShoppingWeb.Controllers
             return View(productViewModelList.ProductList);
         }
 
+        public ActionResult SpecialProductManage()
+        {
+            var specialProducs = service.GetProducts().Where(x => x.OnSpecial == true).ToList();
+            var SpecialProductsModel = ConvertToViewModelList(specialProducs);
+
+            return View(SpecialProductsModel.ProductList);
+        }
 
         public ProductViewModelList ShowPaging(List<Product> productList, int pageIndex)
         {

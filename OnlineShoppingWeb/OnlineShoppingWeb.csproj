@@ -273,6 +273,7 @@
     <Content Include="Views\Shared\EditorTemplates\OrderViewModel.cshtml" />
     <Content Include="Views\Home\getDetailsByCustomer.cshtml" />
     <Content Include="Views\Order\ViewOrderHistoryByCustomer.cshtml" />
+    <Content Include="Views\Product\SpecialProductManage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
