@@ -7,15 +7,14 @@
 <h2>SpecialProductManage</h2>
 
 <div class="container">
-    <div class="jumbotron">
-        <h1>My first Bootstrap website!</h1>
-        <p>This page will grow as we add more and more components from Bootstrap...</p>
-        <a href="#" class="btn btn-info btn-lg"><span class="glyphicon glyphicon-search"></span> Search</a>
-    </div>
+   
 
     <div class="row">
         <div class="col-md-5">
-            <table border="1">
+            <div class="jumbotron">
+                <h4>Products not OnSpecial</h4>
+            </div>
+            <table class="table">
                 <tr>
                     <th>
                         @Html.DisplayNameFor(model => model.Name)
@@ -31,14 +30,12 @@
                     </th>
                     <th>
                         @Html.DisplayNameFor(model => model.OutOfStock)*@
-                    </th>
-                    <th></th>
                 </tr>
-
-                @foreach (var item in Model)
+                
+                @foreach (var item in (List<ProductViewModel>)ViewBag.unSpecialProducts)
                 {
                     <tr>
-                        <td>
+                        <td onclick="selectToMove(@item.Id)" id="@item.Id">
                             @Html.DisplayFor(modelItem => item.Name)
                         </td>
                         @*<td>
@@ -58,14 +55,36 @@
             </table>
         </div>
         <div class="col-md-2">
+            @*<div class="jumbotron">
+            </div>*@
+            
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
             <input type="submit" value=">>>" id="toSpecial" />
+            <br>
             <br>
             <br>
             <br>
             <input type="submit" value="<<<" id="toNormal" />
         </div>
         <div class="col-md-5">
-            <table border="1">
+            <div class="jumbotron">
+                <h4>Products OnSpecial</h4>
+            </div>
+            <table class="table">
                 <tr>
                     <th>
                         @Html.DisplayNameFor(model => model.Name)

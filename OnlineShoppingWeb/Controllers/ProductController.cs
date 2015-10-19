@@ -137,11 +137,14 @@ namespace OnlineShoppingWeb.Controllers
             return View(productViewModelList.ProductList);
         }
 
+        [AdminFilter]
         public ActionResult SpecialProductManage()
         {
             var specialProducs = service.GetProducts().Where(x => x.OnSpecial == true).ToList();
             var SpecialProductsModel = ConvertToViewModelList(specialProducs);
-
+            var unSpecialProducts = service.GetProducts().Where(x=>x.OnSpecial == false || x.OnSpecial == null).ToList();
+            var unSpecialProductsModel = ConvertToViewModelList(unSpecialProducts);
+            ViewBag.unSpecialProducts = unSpecialProductsModel.ProductList;
             return View(SpecialProductsModel.ProductList);
         }
 
