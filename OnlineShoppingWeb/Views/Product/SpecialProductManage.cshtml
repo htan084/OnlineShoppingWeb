@@ -14,7 +14,7 @@
             <div class="jumbotron">
                 <h4>Products not OnSpecial</h4>
             </div>
-            <table class="table">
+            <table class="table" id="normalProduct">
                 <tr>
                     <th>
                         @Html.DisplayNameFor(model => model.Name)
@@ -35,7 +35,7 @@
                 @foreach (var item in (List<ProductViewModel>)ViewBag.unSpecialProducts)
                 {
                     <tr>
-                        <td onclick="selectToMove(@item.Id)" id="@item.Id">
+                        <td onclick="selectToMoveToSpecial(@item.Id)" id="@item.Id">
                             @Html.DisplayFor(modelItem => item.Name)
                         </td>
                         @*<td>
@@ -73,7 +73,7 @@
             <br>
             <br>
             <br>
-            <input type="submit" value=">>>" id="toSpecial" />
+            <input type="submit" value=">>>" id="toSpecial" onclick="moveToSpecial()"/>
             <br>
             <br>
             <br>
@@ -84,7 +84,7 @@
             <div class="jumbotron">
                 <h4>Products OnSpecial</h4>
             </div>
-            <table class="table">
+            <table class="table" id="specialProduct">
                 <tr>
                     <th>
                         @Html.DisplayNameFor(model => model.Name)
@@ -130,8 +130,28 @@
 </div>
 
 <script>
-
-    function selectToMove(Id) {
+    var selectedProductFromSpecial = [];
+    var selectedProductFromNormal = [];
+    function selectToMoveToSpecial(Id) {
         $("#" + Id).css("background-color", "yellow");
+        selectedProductFromNormal.push(Id);
     }
+
+    function selectToMoveToNormal(Id) {
+        $("#" + Id).css("background-color", "brown");
+        selectedProductFromSpecial.push(Id);
+    }
+
+    function moveToSpecial() {
+        $.post('/Product/moveToSpecial', $.param({ data: selectedProductFromNormal }, true), function (data) {
+
+
+        });
+
+
+    }
+
+
+    //var array = [1, 2, 3, 4, 5];
+    //$.post('/controller/MyAction', $.param({ data: array }, true), function(data) {});
 </script>

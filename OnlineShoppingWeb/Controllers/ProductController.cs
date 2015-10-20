@@ -148,6 +148,13 @@ namespace OnlineShoppingWeb.Controllers
             return View(SpecialProductsModel.ProductList);
         }
 
+        [HttpPost]
+        public JsonResult moveToSpecial(List<int> data)
+        {
+
+            return null;
+        }
+
         public ProductViewModelList ShowPaging(List<Product> productList, int pageIndex)
         {
 
