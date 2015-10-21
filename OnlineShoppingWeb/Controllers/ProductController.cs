@@ -151,9 +151,40 @@ namespace OnlineShoppingWeb.Controllers
         [HttpPost]
         public JsonResult moveToSpecial(List<int> data)
         {
-
-            return null;
+            var db = new ZhenLiuOnlineDBContext();
+            var listOfOrders = db.Products.Where(x => data.Contains(x.Id)).ToList().Select(o => new ProductViewModel { 
+                Id = o.Id,
+                Name = o.Name,
+                Price = o.Price.ToString(),
+                Url = o.Url,
+                OnSpecial = true,
+                OutOfStock = false          
+            }).ToList();
+            return Json(listOfOrders, JsonRequestBehavior.AllowGet);
         }
+
+        [HttpPost]
+        public JsonResult moveToNormal(List<int> data)
+        {
+            return null;
+
+        }
+        //public JsonResult GetAllOrders(OrderViewModel order)
+        //{
+        //    var db = new ZhenLiuOnlineDBContext();
+
+        //    var listOfOrders = db.Orders.Select(o=>new OrderViewModel { 
+        //      CustomerName = o.Customer.FirstName+" "+o.Customer.LastName,
+        //      IsChecked = o.IsChecked,
+        //      IsReceived = o.IsReceived,
+        //      IsShipped = o.IsShipped,
+        //      OrderId = o.OrderId,
+        //      OrderNo = o.OrderNo,
+        //      OrderTime = o.OrderTime,
+        //      Total = o.Total
+        //    }).ToList();
+        //    return Json(listOfOrders, JsonRequestBehavior.AllowGet); ;
+        //}
 
         public ProductViewModelList ShowPaging(List<Product> productList, int pageIndex)
         {

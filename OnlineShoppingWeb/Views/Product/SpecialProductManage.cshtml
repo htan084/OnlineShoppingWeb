@@ -34,22 +34,22 @@
                 
                 @foreach (var item in (List<ProductViewModel>)ViewBag.unSpecialProducts)
                 {
-                    <tr>
-                        <td onclick="selectToMoveToSpecial(@item.Id)" id="@item.Id">
+                    <tr id="@item.Id">
+                        <td onclick="selectToMoveToSpecial(@item.Id)">
                             @Html.DisplayFor(modelItem => item.Name)
                         </td>
                         @*<td>
-                            @Html.DisplayFor(modelItem => item.Price)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Url)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.OnSpecial)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.OutOfStock)
-                        </td>*@
+                                @Html.DisplayFor(modelItem => item.Price)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Url)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.OnSpecial)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.OutOfStock)
+                            </td>*@
                     </tr>
                 }
             </table>
@@ -78,7 +78,7 @@
             <br>
             <br>
             <br>
-            <input type="submit" value="<<<" id="toNormal" />
+            <input type="submit" value="<<<" id="toNormal" onclick="moveToNormal()"/>
         </div>
         <div class="col-md-5">
             <div class="jumbotron">
@@ -106,22 +106,22 @@
 
                 @foreach (var item in Model)
                 {
-                    <tr>
-                        <td onclick="selectToMove(@item.Id)" id="@item.Id">
+                    <tr id="@item.Id">
+                        <td onclick="selectToMoveToNormal(@item.Id)">
                             @Html.DisplayFor(modelItem => item.Name)
                         </td>
                         @*<td>
-                            @Html.DisplayFor(modelItem => item.Price)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Url)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.OnSpecial)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.OutOfStock)
-                        </td>*@
+                                @Html.DisplayFor(modelItem => item.Price)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Url)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.OnSpecial)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.OutOfStock)
+                            </td>*@
                     </tr>
                 }
             </table>
@@ -144,11 +144,22 @@
 
     function moveToSpecial() {
         $.post('/Product/moveToSpecial', $.param({ data: selectedProductFromNormal }, true), function (data) {
-
-
+            $.each(data, function (i, product) {
+                $("#" + product.Id).remove();
+                $("#specialProduct").append("<tr id=" +product.Id+"><td>" + product.Name + "</td></tr>");
+                
+            });
         });
+    }
 
-
+    function moveToNormal() {
+        $.post('/Product/moveToNormal', $.param({ data: selectedProductFromSpecial }, true), function (data) {
+            $.each(data, function (i, product) {
+                $("#" + product.Id).remove();
+                $("#normalProduct").append("<tr id=" +product.Id+"><td>" + product.Name + "</td></tr>");
+                
+            });
+        });
     }
 
 
